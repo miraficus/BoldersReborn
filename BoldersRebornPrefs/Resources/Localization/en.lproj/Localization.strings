@@ -1,5 +1,4 @@
-LABEL_OPTIONS_FOOTER_TEXT = "Example: $t has $c apps.
-Result: FolderName has 23 apps.";
+LABEL_OPTIONS_FOOTER_TEXT = "Example: $t has $c apps.";
 LABEL_OPTIONS_LABEL = "Label Options:";
 HOMESCREEN = "Homescreen";
 COUNT_TEXT = "Count Text:";
@@ -50,6 +49,10 @@ MIN_VALUE = "Min value";
 
 FOLDER_BACKGROUND = "Folder Background";
 HOMESCREEN_FOLDER_BACKGROUND = "Homescreen Folder Background";
-HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Enabled: Folder icon on the homescreen will have its blur.
+HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Enabled: Folder icon on the homescreen will have its blur.";
 
-Disabled: Folder icon will have a clear background.";
+TWO_FOLDER_ICON = "2x2 Folder Icon";
+HOMESCREEN_TWO_FOLDER_ICON = "Homescreen 2x2 Folder Icon";
+TWO_FOLDER_ICON_FOOTER_TEXT = "Enabled: Folder icon on the homescreen will have 2x2 Grid.";
+
+// Disabled: Folder icon will have a clear background.

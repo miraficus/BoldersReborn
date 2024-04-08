@@ -300,6 +300,26 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
+			<string>TWO_FOLDER_ICON_FOOTER_TEXT</string>
+			<key>label</key>
+			<string>HOMESCREEN_TWO_FOLDER_ICON</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<string>1</string>
+			<key>defaults</key>
+			<string>com.nightwind.boldersrebornprefs</string>
+			<key>key</key>
+			<string>TwoFolderIcon</string>
+			<key>label</key>
+			<string>TWO_FOLDER_ICON</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
 			<string>HOMESCREEN_ICON_BLUR_FOOTER_TEXT</string>
 			<key>label</key>
 			<string>HOMESCREEN_ICON_BLUR</string>
