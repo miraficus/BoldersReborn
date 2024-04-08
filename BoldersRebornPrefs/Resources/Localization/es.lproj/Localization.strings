@@ -1,4 +1,5 @@
-LABEL_OPTIONS_FOOTER_TEXT = "Ejemplo: $t tiene $c aplicaciones.";
+LABEL_OPTIONS_FOOTER_TEXT = "Ejemplo: $t tiene $c aplicaciones.
+Result: NombreDeCarpeta tiene 23 aplicaciónes..";
 LABEL_OPTIONS_LABEL = "Opciones de Etiquetas:";
 HOMESCREEN = "Pantalla de Inicio";
 COUNT_TEXT = "Texto de Cantidad:";
@@ -51,8 +52,8 @@ FOLDER_BACKGROUND = "Fondo de carpeta";
 HOMESCREEN_FOLDER_BACKGROUND = "Fondo de carpeta en la pantalla de inicio";
 HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Activado: El icono de carpeta en la pantalla de inicio tendrá un fondo difuminado.
 
+Desactivado: El icono de carpeta tendrá un fondo claro.";
+
 TWO_FOLDER_ICON = "Icono de Carpeta 2x2";
 HOMESCREEN_TWO_FOLDER_ICON = "Icono de Carpeta 2x2 en la Pantalla de Inicio";
 TWO_FOLDER_ICON_FOOTER_TEXT = "Activado: El icono de carpeta en la pantalla de inicio tendrá una cuadrícula 2x2.";
-
-Desactivado: El icono de carpeta tendrá un fondo claro.";
