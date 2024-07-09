@@ -48,6 +48,6 @@ HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Abilitato: l'icona della cartella ne
 
 Disabilitato: l'icona della cartella avrà uno sfondo trasparente.";
 
-TWO_FOLDER_ICON = "Icona cartella 2x2";
-HOMESCREEN_TWO_FOLDER_ICON = "Icona cartella 2x2 nella schermata principale";
-TWO_FOLDER_ICON_FOOTER_TEXT = "Abilitato: L'icona della cartella nella schermata principale avrà una griglia 2x2.";
+FOLDER_GRID_TWO_BY_TWO = "Icona cartella 2x2";
+HOMESCREEN_FOLDER_GRID_TWO_BY_TWO = "Icona cartella 2x2 nella schermata principale";
+FOLDER_GRID_TWO_BY_TWO_FOOTER_TEXT = "Abilitato: L'icona della cartella nella schermata principale avrà una griglia 2x2.";

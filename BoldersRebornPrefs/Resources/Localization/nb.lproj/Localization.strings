@@ -54,6 +54,6 @@ HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Aktivert: Mappeikonet på startsiden
 
 Deaktivert: Mappeikonet vil ha en klar bakgrunn.";
 
-TWO_FOLDER_ICON = "2x2 mappeikon";
-HOMESCREEN_TWO_FOLDER_ICON = "Hjemmeskjerm 2x2 mappeikon";
-TWO_FOLDER_ICON_FOOTER_TEXT = "Aktivert: Mappeikonet på hjemmeskjermen vil ha et 2x2 rutenett.";
+FOLDER_GRID_TWO_BY_TWO = "2x2 mappeikon";
+HOMESCREEN_FOLDER_GRID_TWO_BY_TWO = "Hjemmeskjerm 2x2 mappeikon";
+FOLDER_GRID_TWO_BY_TWO_FOOTER_TEXT = "Aktivert: Mappeikonet på hjemmeskjermen vil ha et 2x2 rutenett.";

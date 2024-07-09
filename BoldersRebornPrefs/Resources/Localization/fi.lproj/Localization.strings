@@ -54,6 +54,6 @@ HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Käytössä: Kansion kuvake aloitusn
 
 Pois käytöstä: Kansion kuvake on kirkkaalla taustalla.";
 
-TWO_FOLDER_ICON = "2x2 kansiokuvake";
-HOMESCREEN_TWO_FOLDER_ICON = "Kotikuvan 2x2 kansiokuvake";
-TWO_FOLDER_ICON_FOOTER_TEXT = "Käytössä: Kotikuvan kansiokuvake on 2x2 ruudukko.";
+FOLDER_GRID_TWO_BY_TWO = "2x2 kansiokuvake";
+HOMESCREEN_FOLDER_GRID_TWO_BY_TWO = "Kotikuvan 2x2 kansiokuvake";
+FOLDER_GRID_TWO_BY_TWO_FOOTER_TEXT = "Käytössä: Kotikuvan kansiokuvake on 2x2 ruudukko.";

@@ -300,7 +300,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>TWO_FOLDER_ICON_FOOTER_TEXT</string>
+			<string>FOLDER_GRID_TWO_BY_TWO_FOOTER_TEXT</string>
 			<key>label</key>
 			<string>HOMESCREEN_TWO_FOLDER_ICON</string>
 		</dict>

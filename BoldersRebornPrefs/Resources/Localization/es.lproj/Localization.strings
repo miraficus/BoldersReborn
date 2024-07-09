@@ -54,6 +54,6 @@ HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Activado: El icono de carpeta en la 
 
 Desactivado: El icono de carpeta tendrá un fondo claro.";
 
-TWO_FOLDER_ICON = "Icono de Carpeta 2x2";
-HOMESCREEN_TWO_FOLDER_ICON = "Icono de Carpeta 2x2 en la Pantalla de Inicio";
-TWO_FOLDER_ICON_FOOTER_TEXT = "Activado: El icono de carpeta en la pantalla de inicio tendrá una cuadrícula 2x2.";
+FOLDER_GRID_TWO_BY_TWO = "Icono de Carpeta 2x2";
+HOMESCREEN_FOLDER_GRID_TWO_BY_TWO = "Icono de Carpeta 2x2 en la Pantalla de Inicio";
+FOLDER_GRID_TWO_BY_TWO_FOOTER_TEXT = "Activado: El icono de carpeta en la pantalla de inicio tendrá una cuadrícula 2x2.";

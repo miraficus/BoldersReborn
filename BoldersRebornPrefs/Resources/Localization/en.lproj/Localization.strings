@@ -54,6 +54,6 @@ HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Enabled: Folder icon on the homescre
 
 Disabled: Folder icon will have a clear background.";
 
-TWO_FOLDER_ICON = "2x2 Folder Icon";
-HOMESCREEN_TWO_FOLDER_ICON = "Homescreen 2x2 Folder Icon";
-TWO_FOLDER_ICON_FOOTER_TEXT = "Enabled: Folder icon on the homescreen will have 2x2 Grid.";
+FOLDER_GRID_TWO_BY_TWO = "2x2 Folder Icon";
+HOMESCREEN_FOLDER_GRID_TWO_BY_TWO = "Homescreen 2x2 Folder Icon";
+FOLDER_GRID_TWO_BY_TWO_FOOTER_TEXT = "Enabled: Folder icon on the homescreen will have 2x2 Grid.";

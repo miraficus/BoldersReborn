@@ -389,7 +389,7 @@ NSLayoutConstraint *newConstraint;
 
 	if (orig.layoutConfiguration.numberOfPortraitColumns == 2) {
 		orig.layoutConfiguration.numberOfPortraitRows = 2;
-	} else if (TwoFolderIcon) {
+	} else if (folderIcon2x2) {
         // 2x2 Folder icon
 		orig.layoutConfiguration.numberOfPortraitColumns = 2;
 		orig.layoutConfiguration.numberOfPortraitRows = 2;
@@ -618,7 +618,7 @@ NSLayoutConstraint *newConstraint;
 
 	homescreenIconBlur_portrait = boolForKey(@"homescreenIconBlur_portrait", true);
 
-	TwoFolderIcon = boolForKey(@"TwoFolderIcon", true);
+	folderIcon2x2 = boolForKey(@"folderIcon2x2", true);
 
 	folderBackground_portrait = boolForKey(@"folderBackground_portrait", true);
 
