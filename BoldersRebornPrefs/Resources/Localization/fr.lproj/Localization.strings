@@ -53,3 +53,7 @@ HOMESCREEN_FOLDER_BACKGROUND = "Fond de dossier sur l'écran d'accueil";
 HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Activé : L'icône de dossier sur l'écran d'accueil aura un flou.
 
 Désactivé : L'icône de dossier aura un fond clair.";
+
+TWO_FOLDER_ICON = "Icône de dossier 2x2";
+HOMESCREEN_TWO_FOLDER_ICON = "Icône de dossier 2x2 sur l'écran d'accueil";
+TWO_FOLDER_ICON_FOOTER_TEXT = "Activé : L'icône de dossier sur l'écran d'accueil sera une grille 2x2.";

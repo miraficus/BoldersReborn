@@ -53,3 +53,7 @@ HOMESCREEN_FOLDER_BACKGROUND = "Mappebakgrunn på startsiden";
 HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Aktivert: Mappeikonet på startsiden vil ha en uklar bakgrunn.
 
 Deaktivert: Mappeikonet vil ha en klar bakgrunn.";
+
+TWO_FOLDER_ICON = "2x2 mappeikon";
+HOMESCREEN_TWO_FOLDER_ICON = "Hjemmeskjerm 2x2 mappeikon";
+TWO_FOLDER_ICON_FOOTER_TEXT = "Aktivert: Mappeikonet på hjemmeskjermen vil ha et 2x2 rutenett.";

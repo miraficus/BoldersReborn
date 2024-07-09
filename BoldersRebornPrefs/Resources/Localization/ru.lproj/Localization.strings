@@ -53,3 +53,7 @@ HOMESCREEN_FOLDER_BACKGROUND = "Фон папки на Экране «Домой
 HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Включён: Иконка папки на Экране «Домой» будет иметь размытие.
 
 Отключён: Иконка папки будет иметь прозрачный фон.";
+
+TWO_FOLDER_ICON = "Значок папки 2x2";
+HOMESCREEN_TWO_FOLDER_ICON = "Значок папки 2x2 на главном экране";
+TWO_FOLDER_ICON_FOOTER_TEXT = "Включено: Значок папки на главном экране будет в виде сетки 2x2.";

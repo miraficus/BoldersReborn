@@ -53,3 +53,7 @@ HOMESCREEN_FOLDER_BACKGROUND = "Hintergrund für den Ordner auf dem Startbildsch
 HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Aktiviert: Der Ordner-Icon auf dem Startbildschirm wird unscharf dargestellt.
 
 Deaktiviert: Der Ordner-Icon hat einen klaren Hintergrund.";
+
+TWO_FOLDER_ICON = "2x2 Ordner-Symbol";
+HOMESCREEN_TWO_FOLDER_ICON = "Startbildschirm 2x2 Ordner-Symbol";
+TWO_FOLDER_ICON_FOOTER_TEXT = "Aktiviert: Ordnersymbol auf dem Startbildschirm wird ein 2x2 Raster haben.";

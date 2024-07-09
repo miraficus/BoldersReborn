@@ -53,3 +53,7 @@ HOMESCREEN_FOLDER_BACKGROUND = "主屏文件夹背景";
 HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "启用：主屏幕上的文件夹图标将具有模糊效果。
 
 禁用：文件夹图标将具有清晰的背景。";
+
+TWO_FOLDER_ICON = "2x2文件夹图标";
+HOMESCREEN_TWO_FOLDER_ICON = "主屏幕2x2文件夹图标";
+TWO_FOLDER_ICON_FOOTER_TEXT = "启用: 主屏幕上的文件夹图标将显示为2x2网格。";
