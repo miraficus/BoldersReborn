@@ -302,7 +302,7 @@
 			<key>footerText</key>
 			<string>FOLDER_GRID_TWO_BY_TWO_FOOTER_TEXT</string>
 			<key>label</key>
-			<string>HOMESCREEN_TWO_FOLDER_ICON</string>
+			<string>HOMESCREEN_FOLDER_GRID_TWO_BY_TWO</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -312,9 +312,9 @@
 			<key>defaults</key>
 			<string>com.nightwind.boldersrebornprefs</string>
 			<key>key</key>
-			<string>TwoFolderIcon</string>
+			<string>folderIcon2x2</string>
 			<key>label</key>
-			<string>TWO_FOLDER_ICON</string>
+			<string>FOLDER_GRID_TWO_BY_TWO</string>
 		</dict>
 		<dict>
 			<key>cell</key>
