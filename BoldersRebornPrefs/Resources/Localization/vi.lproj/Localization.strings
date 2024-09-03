@@ -53,3 +53,7 @@ HOMESCREEN_FOLDER_BACKGROUND = "Nền Thư Mục Màn Hình Chính";
 HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Bật: Biểu tượng thư mục trên màn hình chính sẽ có độ mờ.
 
 Tắt: Biểu tượng thư mục sẽ có nền trong suốt.";
+
+FOLDER_GRID_TWO_BY_TWO = "Biểu tượng thư mục 2x2";
+HOMESCREEN_FOLDER_GRID_TWO_BY_TWO = "Biểu tượng thư mục 2x2 trên màn hình chính";
+FOLDER_GRID_TWO_BY_TWO_FOOTER_TEXT = "Đã bật: Biểu tượng thư mục trên màn hình chính sẽ có lưới 2x2.";

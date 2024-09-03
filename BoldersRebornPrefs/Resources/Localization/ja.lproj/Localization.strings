@@ -53,3 +53,7 @@ HOMESCREEN_FOLDER_BACKGROUND = "透明化(OFF) / (ON)表示";
 HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "有効の場合: ホーム画面でフォルダの枠が表示されます。
 
 無効の場合: ホーム画面でフォルダの枠は透明になります。";
+
+FOLDER_GRID_TWO_BY_TWO = "2x2フォルダアイコン";
+HOMESCREEN_FOLDER_GRID_TWO_BY_TWO = "ホーム画面の2x2フォルダアイコン";
+FOLDER_GRID_TWO_BY_TWO_FOOTER_TEXT = "有効: ホーム画面のフォルダアイコンは2x2のグリッドになります。";

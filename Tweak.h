@@ -166,6 +166,7 @@ NSUInteger verticalIconSpacing_portrait;
 
 BOOL homescreenIconBlur_portrait;
 BOOL folderBackground_portrait;
+BOOL folderIcon2x2;
 
 /*
 |==================================================================|

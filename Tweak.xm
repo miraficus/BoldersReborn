@@ -381,17 +381,18 @@ NSLayoutConstraint *newConstraint;
 // Makes the folder icon always 3x3 or 3x4 no matter what, matching the original Bolders's looks
 - (SBIconListGridLayout *)listLayout {
 	SBIconListGridLayout *orig = %orig;
-
 	orig.layoutConfiguration.check = true;
 
 	if (orig.layoutConfiguration.numberOfPortraitColumns == 2) {
 		orig.layoutConfiguration.numberOfPortraitRows = 2;
-	} else {
+	} else if (folderIcon2x2) {
+        // 2x2 Folder icon
+		orig.layoutConfiguration.numberOfPortraitColumns = 2;
+		orig.layoutConfiguration.numberOfPortraitRows = 2;
+    } else {
 		if (rows >= 4) orig.layoutConfiguration.numberOfPortraitRows = 4;
-
 		if (kUserIsNOTOnIpad && rows == 3) orig.layoutConfiguration.numberOfPortraitRows = 3;
 	}
-
 	return orig;
 }
 
@@ -604,6 +605,8 @@ NSLayoutConstraint *newConstraint;
 	iconScale_portrait = doubleForKey(@"iconScale_portrait", 1);
 
 	homescreenIconBlur_portrait = boolForKey(@"homescreenIconBlur_portrait", true);
+
+	folderIcon2x2 = boolForKey(@"folderIcon2x2", true);
 
 	folderBackground_portrait = boolForKey(@"folderBackground_portrait", true);
 

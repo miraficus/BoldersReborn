@@ -1,4 +1,4 @@
-LABEL_OPTIONS_FOOTER_TEXT = "Ejemplo: $t tiene $c aplicaciónes.
+LABEL_OPTIONS_FOOTER_TEXT = "Ejemplo: $t tiene $c aplicaciones.
 Result: NombreDeCarpeta tiene 23 aplicaciónes..";
 LABEL_OPTIONS_LABEL = "Opciones de Etiquetas:";
 HOMESCREEN = "Pantalla de Inicio";
@@ -20,7 +20,7 @@ TOP_ICON_INSET_FOOTER_TEXT = "Espacio adicional desde la parte superior.";
 TOP_ICON_INSET = "ESPACIO VERTICAL ENTRE ÍCONOS";
 VERTICAL_ICON_SPACING_FOOTER_TEXT = "Espaciado vertical de los íconos";
 VERTICAL_ICON_SPACING = "VERTICAL ICON INSET";
-HORIZONTAL_OFFSET_FOOTER_TEXT = "Desplazamiento horizontal de la carpeta desde su posicíon original.";
+HORIZONTAL_OFFSET_FOOTER_TEXT = "Desplazamiento horizontal de la carpeta desde su posición original.";
 HORIZONTAL_OFFSET = "DESPLAZAMIENTO HORIZONTAL";
 ICON_SCALE = "TAMAÑO DE LOS ÍCONOS (%)";
 HOMESCREEN_ICON_BLUR_FOOTER_TEXT = "Activado: Desenfoca el fondo de la pantalla de inicio.
@@ -36,8 +36,8 @@ RESPRING = "Respring";
 RESET_PREFS = "Restablecer preferencias";
 DEFAULT_APPS = "$c APLICACIONES";
 
-RESET_PREFERENCES_QUESTION = "¿Restablecer preferencias?"
-RESET_PREFERENCES_DESCRIPTION = "No se puede deshacer."
+RESET_PREFERENCES_QUESTION = "¿Restablecer preferencias?";
+RESET_PREFERENCES_DESCRIPTION = "No se puede deshacer.";
 
 RESET_RESET = "Restablecer";
 
@@ -53,3 +53,7 @@ HOMESCREEN_FOLDER_BACKGROUND = "Fondo de carpeta en la pantalla de inicio";
 HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Activado: El icono de carpeta en la pantalla de inicio tendrá un fondo difuminado.
 
 Desactivado: El icono de carpeta tendrá un fondo claro.";
+
+FOLDER_GRID_TWO_BY_TWO = "Icono de Carpeta 2x2";
+HOMESCREEN_FOLDER_GRID_TWO_BY_TWO = "Icono de Carpeta 2x2 en la Pantalla de Inicio";
+FOLDER_GRID_TWO_BY_TWO_FOOTER_TEXT = "Activado: El icono de carpeta en la pantalla de inicio tendrá una cuadrícula 2x2.";

@@ -53,3 +53,7 @@ HOMESCREEN_FOLDER_BACKGROUND = "خلفية المجلد في الشاشة الر
 HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "مُمَكَّن: ستكون أيقونة المجلد على الشاشة الرئيسية بخلفية غامقة.
 
 غير مُمَكَّن: ستكون أيقونة المجلد بخلفية واضحة.";
+
+FOLDER_GRID_TWO_BY_TWO = "رمز المجلد 2 x2";
+HOMESCREEN_FOLDER_GRID_TWO_BY_TWO = "رمز المجلد 2x2 على الشاشة الرئيسية";
+FOLDER_GRID_TWO_BY_TWO_FOOTER_TEXT = "مفعل: سيكون رمز المجلد على الشاشة الرئيسية عبارة عن شبكة 2x2.";
