@@ -47,7 +47,3 @@ HOMESCREEN_FOLDER_BACKGROUND = "Sfondo cartella nella schermata principale";
 HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Abilitato: l'icona della cartella nella schermata principale avrà lo sfondo sfocato.
 
 Disabilitato: l'icona della cartella avrà uno sfondo trasparente.";
-
-FOLDER_GRID_TWO_BY_TWO = "Icona cartella 2x2";
-HOMESCREEN_FOLDER_GRID_TWO_BY_TWO = "Icona cartella 2x2 nella schermata principale";
-FOLDER_GRID_TWO_BY_TWO_FOOTER_TEXT = "Abilitato: L'icona della cartella nella schermata principale avrà una griglia 2x2.";
