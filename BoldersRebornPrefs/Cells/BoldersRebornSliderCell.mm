@@ -68,11 +68,13 @@ NSString *stringFromFloatRoundedToDecimalPlaces(NSUInteger decimalPlaces, float 
         float textFieldValue = [[[alertController textFields][0] text] floatValue];
         UISlider *slider = (UISlider *)self.control;
 
+        if (textFieldValue) {
             [slider setValue:textFieldValue animated: true];
             NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"com.nightwind.boldersrebornprefs"];
 
             [userDefaults setObject:@(textFieldValue) forKey:self.specifier.identifier];
             [userDefaults synchronize];
+        }
 
         if (textFieldValue < slider.minimumValue || textFieldValue > slider.maximumValue) {
             action.enabled = false;
