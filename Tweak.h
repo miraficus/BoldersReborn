@@ -1,5 +1,5 @@
-@import UIKit;
-#import "rootless.h"
+#import <UIKit/UIKit.h>
+#import <rootless.h>
 
 @interface UIView ()
 - (UIViewController *)_viewControllerForAncestor;

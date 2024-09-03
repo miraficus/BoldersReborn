@@ -5,7 +5,7 @@
 #import <Preferences/PSSliderTableCell.h>
 #import <substrate.h>
 #import <spawn.h>
-#import "rootless.h"
+#import <rootless.h>
 
 @interface PSSegmentTableCell : PSControlTableCell {
 

@@ -18,7 +18,6 @@ static inline NSString *localizedCountString(NSUInteger count) {
     return [numberFormatter stringFromNumber:[NSNumber numberWithUnsignedLong:count]];
 }
 
-%group BoldersReborn
 
 // This hook hides the background square of the original folder layout
 %hook SBFolderBackgroundView
@@ -252,9 +251,9 @@ static inline NSString *localizedCountString(NSUInteger count) {
 
 // Fixes the icon placement inside of a folder and in general
 - (NSUInteger)firstFreeSlotIndex {
-    if (self.numberOfIcons >= self.maxNumberOfIcons)
+    if (self.numberOfIcons >= self.maxNumberOfIcons) {
         return 0x7FFFFFFFFFFFFFFFLL;
-
+	}
     return self.numberOfIcons;
 }
 
@@ -547,9 +546,6 @@ static inline NSString *localizedCountString(NSUInteger count) {
 
 %end
 
-
-%end
-
 %ctor {
 	__block NSUserDefaults *prefs = [[NSUserDefaults alloc] initWithSuiteName:@"com.nightwind.boldersrebornprefs"];
 
@@ -615,7 +611,7 @@ static inline NSString *localizedCountString(NSUInteger count) {
 	folderBackground_portrait = boolForKey(@"folderBackground_portrait", true);
 
 	if (tweakEnabled) {
-		%init(BoldersReborn);
+		%init;
 	}
 }
 
