@@ -2,15 +2,10 @@
 
 #import "BoldersRebornListControllers.h"
 
-#define kTintColor [UIColor colorWithRed:0.86 green:0.26 blue:0.31 alpha:1.0]
-#define kSelectedTintColor [UIColor colorWithRed:0.84 green:0.44 blue:0.47 alpha:1.0]
-#define kLang NSLocale.currentLocale.languageCode
+static UIColor *const kTintColor = [UIColor colorWithRed:0.86 green:0.26 blue:0.31 alpha:1.0];
+static UIColor *const kSelectedTintColor = [UIColor colorWithRed:0.84 green:0.44 blue:0.47 alpha:1.0];
 
-@interface UINavigationItem (Private)
-@property (nonatomic, weak, readwrite) UINavigationBar *navigationBar;
-@end
-
-void respring() {
+static void respring() {
     extern char **environ;
     pid_t pid;
 
@@ -26,7 +21,7 @@ void respring() {
     posix_spawn(&pid, ROOT_PATH("/usr/bin/sbreload"), NULL, NULL, (char *const *)args, environ);
 }
 
-void performRespringFromController(UIViewController *controller) {
+static void performRespringFromController(UIViewController *controller) {
 	UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
 	UIVisualEffectView *blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
 	blurView.frame = controller.view.bounds;
@@ -41,9 +36,9 @@ void performRespringFromController(UIViewController *controller) {
 	}];
 }
 
-void performResetPrefsFromController(UIViewController *controller) {
+static void performResetPrefsFromController(UIViewController *controller) {
 	NSString *genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
-	NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:kLang];
+	NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
 
 	if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
 		filePath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/en.lproj/Localization.strings");
@@ -82,9 +77,9 @@ void performResetPrefsFromController(UIViewController *controller) {
 	[controller presentViewController:alert animated:true completion:nil];
 }
 
-void localize(PSListController *controller, NSArray *_specifiers) {
+static void localize(PSListController *controller, NSArray *_specifiers) {
 	NSString *genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
-	NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:kLang];
+	NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
 
 	if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
 		filePath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/en.lproj/Localization.strings");
@@ -109,7 +104,7 @@ void localize(PSListController *controller, NSArray *_specifiers) {
 }
 
 
-NSString *localizedCountString(NSUInteger count) {
+static NSString *localizedCountString(NSUInteger count) {
     NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
     numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
     NSString *countString = [numberFormatter stringFromNumber:[NSNumber numberWithUnsignedLong:count]];
@@ -124,31 +119,32 @@ NSString *localizedCountString(NSUInteger count) {
 		_specifiers = [self loadSpecifiersFromPlistName:@"Root" target:self];
 
 		NSString *genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
-		NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:kLang];
+		NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
 
 		if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
 			filePath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/en.lproj/Localization.strings");
 
-			NSString *langName = [[NSLocale.currentLocale localizedStringForLanguageCode:kLang] capitalizedString];
+			NSString *langName = [[NSLocale.currentLocale localizedStringForLanguageCode:NSLocale.currentLocale.languageCode] capitalizedString];
 			NSString *error = [NSString stringWithFormat:@"The %@ language is not currently supported. Click here to help translate it!", langName];
 			NSRange range = [error rangeOfString:@"here"];
 			NSString *locationOfHere = [NSString stringWithFormat:@"{%lu, %lu}", range.location, range.length];
 
 			[_specifiers addObject:({
-				PSSpecifier *specifier = [PSSpecifier preferenceSpecifierNamed:NULL
-																		target:self
-																		set:NULL
-																		get:NULL
-																		detail:NULL
-																		cell:PSGroupCell
-																		edit:nil];
+				PSSpecifier *specifier = [PSSpecifier
+					preferenceSpecifierNamed:NULL
+					target:self
+					set:NULL
+					get:NULL
+					detail:NULL
+					cell:PSGroupCell
+					edit:nil
+				];
 
 				[specifier setProperty:@"PSFooterHyperlinkView" forKey:@"footerCellClass"];
 				[specifier setProperty:@"openTranslationSite" forKey:@"footerHyperlinkAction"];
 				[specifier setProperty:error forKey:@"headerFooterHyperlinkButtonTitle"];
 				[specifier setProperty:locationOfHere forKey:@"footerHyperlinkRange"];
 				[specifier setProperty:[NSValue valueWithNonretainedObject:self] forKey:@"footerHyperlinkTarget"];
-
 
 				specifier;
 			})];
@@ -157,17 +153,18 @@ NSString *localizedCountString(NSUInteger count) {
 		NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
 
 		[_specifiers addObject:({
-			PSSpecifier *specifier = [PSSpecifier preferenceSpecifierNamed:NULL
-																	target:self
-																	set:NULL
-																	get:NULL
-																	detail:NULL
-																	cell:PSGroupCell
-																	edit:nil];
+			PSSpecifier *specifier = [PSSpecifier
+				preferenceSpecifierNamed:NULL
+				target:self
+				set:NULL
+				get:NULL
+				detail:NULL
+				cell:PSGroupCell
+				edit:nil
+			];
 
 			[specifier setProperty:strcmp(THEOS_PACKAGE_INSTALL_PREFIX, "/var/jb") == 0 ? [dict objectForKey:@"BUILD_ROOTLESS"] : [dict objectForKey:@"BUILD_ROOTFUL"] forKey:@"footerText"];
 			[specifier setProperty:@1 forKey:@"footerAlignment"];
-
 
 			specifier;
 		})];
@@ -182,7 +179,7 @@ NSString *localizedCountString(NSUInteger count) {
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/NightwindDev/BoldersReborn/blob/main/Translation.md"] options:@{} completionHandler:nil];
 }
 
--(void)_returnKeyPressed:(id)arg1 {
+- (void)_returnKeyPressed:(id)arg1 {
     [self.view endEditing:YES];
 }
 
@@ -201,7 +198,7 @@ NSString *localizedCountString(NSUInteger count) {
 
 - (void)initTopMenu {
 	NSString *genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
-	NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:kLang];
+	NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
 
 	if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
 		filePath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/en.lproj/Localization.strings");
@@ -216,17 +213,11 @@ NSString *localizedCountString(NSUInteger count) {
 	topMenuButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
 	topMenuButton.tintColor = kTintColor;
 
-	UIAction *respring = [UIAction actionWithTitle:[dict objectForKey:@"RESPRING"]
-													image:[UIImage systemImageNamed:@"arrow.counterclockwise.circle.fill"]
-												identifier:nil
-												handler:^(UIAction *action) {
+	UIAction *respring = [UIAction actionWithTitle:[dict objectForKey:@"RESPRING"] image:[UIImage systemImageNamed:@"arrow.counterclockwise.circle.fill"] identifier:nil handler:^(UIAction *action) {
 		performRespringFromController(self);
 	}];
 
-	UIAction *resetPrefs = [UIAction actionWithTitle:[dict objectForKey:@"RESET_PREFS"]
-													image:[UIImage systemImageNamed:@"arrow.triangle.2.circlepath.circle.fill"]
-												identifier:nil
-													handler:^(UIAction *action) {
+	UIAction *resetPrefs = [UIAction actionWithTitle:[dict objectForKey:@"RESET_PREFS"] image:[UIImage systemImageNamed:@"arrow.triangle.2.circlepath.circle.fill"] identifier:nil handler:^(UIAction *action) {
 		performResetPrefsFromController(self);
 	}];
 
@@ -237,9 +228,7 @@ NSString *localizedCountString(NSUInteger count) {
 	topMenuButton.menu = [UIMenu menuWithTitle:@"" children: items];
 	topMenuButton.showsMenuAsPrimaryAction = true;
 
-	topMenuButtonItem = [[UIBarButtonItem alloc] initWithCustomView:topMenuButton];
-
-	self.navigationItem.rightBarButtonItem = topMenuButtonItem;
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:topMenuButton];
 }
 
 - (instancetype)init {
@@ -275,13 +264,13 @@ NSString *localizedCountString(NSUInteger count) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc]
-                initWithTarget:self action:@selector(handleSingleTap:)];
+
+    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     tapper.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tapper];
 
 	NSString *genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
-	NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:kLang];
+	NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
 
 	NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"com.nightwind.boldersrebornprefs"];
 
@@ -352,7 +341,7 @@ NSString *localizedCountString(NSUInteger count) {
 
 - (void)initTopMenu {
 	NSString *genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
-	NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:kLang];
+	NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
 
 	if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
 		filePath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/en.lproj/Localization.strings");
@@ -367,17 +356,11 @@ NSString *localizedCountString(NSUInteger count) {
 	topMenuButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
 	topMenuButton.tintColor = kTintColor;
 
-	UIAction *respring = [UIAction actionWithTitle:[dict objectForKey:@"RESPRING"]
-													image:[UIImage systemImageNamed:@"arrow.counterclockwise.circle.fill"]
-												identifier:nil
-												handler:^(UIAction *action) {
+	UIAction *respring = [UIAction actionWithTitle:[dict objectForKey:@"RESPRING"] image:[UIImage systemImageNamed:@"arrow.counterclockwise.circle.fill"] identifier:nil handler:^(UIAction *action) {
 		performRespringFromController(self);
 	}];
 
-	UIAction *resetPrefs = [UIAction actionWithTitle:[dict objectForKey:@"RESET_PREFS"]
-													image:[UIImage systemImageNamed:@"arrow.triangle.2.circlepath.circle.fill"]
-												identifier:nil
-													handler:^(UIAction *action) {
+	UIAction *resetPrefs = [UIAction actionWithTitle:[dict objectForKey:@"RESET_PREFS"] image:[UIImage systemImageNamed:@"arrow.triangle.2.circlepath.circle.fill"] identifier:nil handler:^(UIAction *action) {
 		performResetPrefsFromController(self);
 	}];
 
@@ -388,9 +371,7 @@ NSString *localizedCountString(NSUInteger count) {
 	topMenuButton.menu = [UIMenu menuWithTitle:@"" children: items];
 	topMenuButton.showsMenuAsPrimaryAction = true;
 
-	topMenuButtonItem = [[UIBarButtonItem alloc] initWithCustomView:topMenuButton];
-
-	self.navigationItem.rightBarButtonItem = topMenuButtonItem;
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:topMenuButton];
 }
 
 - (PSControlTableCell *)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath {
@@ -489,16 +470,12 @@ NSString *localizedCountString(NSUInteger count) {
 
 	gradient.mask = mask;
 
-	[self.view addSubview: _imageView];
-
-	// CGFloat aspectRatio = image.size.height / image.size.width;
+	[self.view addSubview:_imageView];
 
 	[NSLayoutConstraint activateConstraints:@[
 		[_imageView.widthAnchor constraintEqualToAnchor: self.view.widthAnchor],
 		[_imageView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
-		[_imageView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-		// [_imageView.heightAnchor constraintEqualToAnchor:_imageView.widthAnchor multiplier:aspectRatio]
-		// [_imageView.heightAnchor constraintGreaterThanOrEqualToAnchor:self.view.heightAnchor]
+		[_imageView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor]
 	]];
 
 	[self.view.layer addSublayer:gradient];
@@ -553,8 +530,8 @@ NSString *localizedCountString(NSUInteger count) {
 	switchCell.translatesAutoresizingMaskIntoConstraints = false;
 	switchCell.onTintColor = kTintColor;
 	switchCell.on = isOn;
-	[switchCell addTarget: self action: @selector(switchTriggered:) forControlEvents: UIControlEventValueChanged];
-	[self.view addSubview: switchCell];
+	[switchCell addTarget:self action: @selector(switchTriggered:) forControlEvents: UIControlEventValueChanged];
+	[self.view addSubview:switchCell];
 
 	[NSLayoutConstraint activateConstraints:@[
 		[switchCell.bottomAnchor constraintEqualToAnchor:infoTitle.topAnchor constant: -30],
@@ -601,13 +578,9 @@ NSString *localizedCountString(NSUInteger count) {
 		newText = self.offInfoDescription;
 	}
 
-    [UIView transitionWithView:_imageView
-                      duration:0.3
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        _imageView.image = newImage;
-                    }
-                    completion:nil];
+    [UIView transitionWithView:_imageView duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+		_imageView.image = newImage;
+	} completion:nil];
 
     CATransition *textTransition = [CATransition animation];
     textTransition.duration = 0.3;
