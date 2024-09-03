@@ -23,10 +23,6 @@ NSString *localizedCountString(NSUInteger count) {
     return countString;
 }
 
-BOOL isProperiOSForHidingBackground() {
-   return [[[UIDevice currentDevice] systemVersion] isEqualToString:@"15.1.1"] ? false : true;
-}
-
 NSLayoutConstraint *newConstraint;
 
 
@@ -511,7 +507,7 @@ NSLayoutConstraint *newConstraint;
 %end
 
 
-// Hiding the folder background, WHY did iOS 15.1.1 have a different impl -- I will never know
+// Hiding the folder background
 %hook SBFolderIconImageView
 
 - (void)layoutSubviews {
@@ -519,16 +515,8 @@ NSLayoutConstraint *newConstraint;
 
 	if (!folderBackground_portrait && [self _viewControllerForAncestor] && ![[self _viewControllerForAncestor] isKindOfClass:%c(SBHLibraryCategoryIconViewController)]) {
 		for (UIView *subview in self.subviews) {
-			if (!isProperiOSForHidingBackground()) {
-				if (subview == self.subviews[0]) {
-					[subview setAlpha:0];
-				} else if (subview == self.subviews[1]) {
-					[subview setAlpha:0];
-				}
-			} else {
-				if (![subview subviews] || [subview isKindOfClass:%c(MTMaterialView)]) {
-					[subview setAlpha:0];
-				}
+			if (![subview subviews] || [subview isKindOfClass:%c(MTMaterialView)]) {
+				[subview setAlpha:0];
 			}
 		}
 	}
