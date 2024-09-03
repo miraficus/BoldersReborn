@@ -10,21 +10,13 @@
 
 #import "Tweak.h"
 
-// Useful macros for the tweak
-#define kUserIsOnIpad UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad
-#define kUserIsNOTOnIpad UIDevice.currentDevice.userInterfaceIdiom != UIUserInterfaceIdiomPad
-#define isRTL [NSLocale characterDirectionForLanguage:NSLocale.preferredLanguages.firstObject] == NSLocaleLanguageDirectionRightToLeft
-#define kIsInFolder [self.location isEqualToString:@"SBIconLocationFolder"] && ![self.location isEqualToString:@"SBIconLocationAppLibraryCategoryPodExpanded"] && ![self.location isEqualToString:@"SBIconLocationRoot"]
+static id lastIconSuccess = nil;
 
-NSString *localizedCountString(NSUInteger count) {
+static inline NSString *localizedCountString(NSUInteger count) {
     NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
     numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
-    NSString *countString = [numberFormatter stringFromNumber:[NSNumber numberWithUnsignedLong:count]];
-    return countString;
+    return [numberFormatter stringFromNumber:[NSNumber numberWithUnsignedLong:count]];
 }
-
-NSLayoutConstraint *newConstraint;
-
 
 %group BoldersReborn
 
@@ -114,7 +106,8 @@ NSLayoutConstraint *newConstraint;
 %end
 
 %hook SBFolderTitleTextField
-%property (nonatomic, strong) UILabel *amtOfApps;
+%property (nonatomic, strong) UILabel *_br_appCountLabel;
+%property (nonatomic, strong) NSLayoutConstraint *_br_newConstraint;
 
 // Changes the font of the title of the folder
 - (void)setFont:(UIFont *)font {
@@ -134,31 +127,31 @@ NSLayoutConstraint *newConstraint;
 
 	NSString *text = [[countText stringByReplacingOccurrencesOfString:@"$c" withString:iconCount] stringByReplacingOccurrencesOfString:@"$t" withString:displayName];
 
-	self.amtOfApps = [UILabel new];
-	self.amtOfApps.text = text;
-	self.amtOfApps.translatesAutoresizingMaskIntoConstraints = false;
-	self.amtOfApps.font = [UIFont systemFontOfSize: (25 * subtitleScale_portrait) weight: UIFontWeightSemibold];
-	self.amtOfApps.alpha = subtitleTransparency_portrait;
-	[self addSubview: self.amtOfApps];
+	self._br_appCountLabel = [UILabel new];
+	self._br_appCountLabel.text = text;
+	self._br_appCountLabel.translatesAutoresizingMaskIntoConstraints = false;
+	self._br_appCountLabel.font = [UIFont systemFontOfSize: (25 * subtitleScale_portrait) weight: UIFontWeightSemibold];
+	self._br_appCountLabel.alpha = subtitleTransparency_portrait;
+	[self addSubview: self._br_appCountLabel];
 
-	// [self.amtOfApps.bottomAnchor constraintEqualToAnchor: self.topAnchor constant: 15 + subtitleOffset_portrait - topIconInset_portrait].active = true;
-	[self.amtOfApps.leadingAnchor constraintEqualToAnchor: self.leadingAnchor constant: 20].active = true;
-	[self.amtOfApps.widthAnchor constraintEqualToAnchor: self.widthAnchor].active = true;
+	// [self._br_appCountLabel.bottomAnchor constraintEqualToAnchor: self.topAnchor constant: 15 + subtitleOffset_portrait - topIconInset_portrait].active = true;
+	[self._br_appCountLabel.leadingAnchor constraintEqualToAnchor: self.leadingAnchor constant: 20].active = true;
+	[self._br_appCountLabel.widthAnchor constraintEqualToAnchor: self.widthAnchor].active = true;
 }
 
 // Places all the views in their correct positions
 - (void)layoutSubviews {
 	%orig;
 
-	UIView *canvasView;
+	const BOOL deviceLanguageIsRTL = [NSLocale characterDirectionForLanguage:NSLocale.preferredLanguages.firstObject] == NSLocaleLanguageDirectionRightToLeft;
 
-	canvasView = self._textCanvasView;
+	UIView *canvasView = self._textCanvasView;
 
 	UIColor *origColor = self.textColor;
 	self.textColor = [origColor colorWithAlphaComponent:titleTransparency_portrait];
 
 	CGRect origTextFrame = canvasView.frame;
-	canvasView.frame = CGRectMake(isRTL ? -55 : 20, origTextFrame.origin.y + titleOffset_portrait - topIconInset_portrait, UIScreen.mainScreen.bounds.size.width, origTextFrame.size.height);
+	canvasView.frame = CGRectMake(deviceLanguageIsRTL ? -55 : 20, origTextFrame.origin.y + titleOffset_portrait - topIconInset_portrait, UIScreen.mainScreen.bounds.size.width, origTextFrame.size.height);
 
 	CGRect origBGFrame = self._backgroundView.frame;
 	self._backgroundView.frame = CGRectMake(origBGFrame.origin.x, origBGFrame.origin.y + titleOffset_portrait - topIconInset_portrait, origBGFrame.size.width, origBGFrame.size.height);
@@ -168,16 +161,16 @@ NSLayoutConstraint *newConstraint;
 
 	// ----- //
 
-	newConstraint.active = false;
+	self._br_newConstraint.active = false;
 
 	if ([self showingEditUI]) {
-		newConstraint = [self.amtOfApps.bottomAnchor constraintEqualToAnchor: self.topAnchor constant: subtitleOffset_portrait - topIconInset_portrait];
+		self._br_newConstraint = [self._br_appCountLabel.bottomAnchor constraintEqualToAnchor: self.topAnchor constant: subtitleOffset_portrait - topIconInset_portrait];
 	} else {
-		newConstraint = [self.amtOfApps.bottomAnchor constraintEqualToAnchor: self.topAnchor constant: 15 + subtitleOffset_portrait - topIconInset_portrait];
+		self._br_newConstraint = [self._br_appCountLabel.bottomAnchor constraintEqualToAnchor: self.topAnchor constant: 15 + subtitleOffset_portrait - topIconInset_portrait];
 	}
 
 	[UIView animateWithDuration:0.3 animations:^{
-		newConstraint.active = true;
+		self._br_newConstraint.active = true;
 		[self layoutIfNeeded];
 	}];
 }
@@ -351,11 +344,16 @@ NSLayoutConstraint *newConstraint;
 	SBIconListGridLayout *orig = listLayout;
 	orig.layoutConfiguration.check = true;
 
-	if (orig.layoutConfiguration.numberOfPortraitColumns == 2) orig.layoutConfiguration.numberOfPortraitRows = 2;
-	else {
-		if (rows >= 4) orig.layoutConfiguration.numberOfPortraitRows = 4;
+	if (orig.layoutConfiguration.numberOfPortraitColumns == 2) {
+		orig.layoutConfiguration.numberOfPortraitRows = 2;
+	} else {
+		if (rows >= 4) {
+			orig.layoutConfiguration.numberOfPortraitRows = 4;
+		}
 
-		if (kUserIsNOTOnIpad && rows == 3) orig.layoutConfiguration.numberOfPortraitRows = 3;
+		if (UIDevice.currentDevice.userInterfaceIdiom != UIUserInterfaceIdiomPad && rows == 3) {
+			orig.layoutConfiguration.numberOfPortraitRows = 3;
+		}
 	}
 
 	%orig(orig);
@@ -387,9 +385,13 @@ NSLayoutConstraint *newConstraint;
 	if (orig.layoutConfiguration.numberOfPortraitColumns == 2) {
 		orig.layoutConfiguration.numberOfPortraitRows = 2;
 	} else {
-		if (rows >= 4) orig.layoutConfiguration.numberOfPortraitRows = 4;
+		if (rows >= 4) {
+			orig.layoutConfiguration.numberOfPortraitRows = 4;
+		}
 
-		if (kUserIsNOTOnIpad && rows == 3) orig.layoutConfiguration.numberOfPortraitRows = 3;
+		if (UIDevice.currentDevice.userInterfaceIdiom != UIUserInterfaceIdiomPad && rows == 3) {
+			orig.layoutConfiguration.numberOfPortraitRows = 3;
+		}
 	}
 
 	return orig;
@@ -400,11 +402,16 @@ NSLayoutConstraint *newConstraint;
 	SBIconListGridLayout *orig = listLayout;
 	orig.layoutConfiguration.check = true;
 
-	if (orig.layoutConfiguration.numberOfPortraitColumns == 2) orig.layoutConfiguration.numberOfPortraitRows = 2;
-	else {
-		if (rows >= 4) orig.layoutConfiguration.numberOfPortraitRows = 4;
+	if (orig.layoutConfiguration.numberOfPortraitColumns == 2) {
+		orig.layoutConfiguration.numberOfPortraitRows = 2;
+	} else {
+		if (rows >= 4) {
+			orig.layoutConfiguration.numberOfPortraitRows = 4;
+		}
 
-		if (kUserIsNOTOnIpad && rows == 3) orig.layoutConfiguration.numberOfPortraitRows = 3;
+		if (UIDevice.currentDevice.userInterfaceIdiom != UIUserInterfaceIdiomPad && rows == 3) {
+			orig.layoutConfiguration.numberOfPortraitRows = 3;
+		}
 	}
 
 	%orig(orig);
@@ -432,7 +439,7 @@ NSLayoutConstraint *newConstraint;
 
 	if ([image respondsToSelector:@selector(iconImageAtIndex:)]) {
 		if (image.numberOfColumns > 2 && [image iconImageAtIndex:1]) {
-			if (kUserIsOnIpad) {
+			if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
 				if (!(image.numberOfRows == 4 && image.numberOfColumns == 4)) {
 					[self adjustTransform];
 				}
@@ -453,7 +460,7 @@ NSLayoutConstraint *newConstraint;
 	SBIconGridImage *image = (SBIconGridImage *)self.image;
 
 	if (image.numberOfColumns > 2 && [image iconImageAtIndex:1]) {
-		if (kUserIsOnIpad) {
+		if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
 			if (!(image.numberOfRows == 4 && image.numberOfColumns == 4)) {
 				[self adjustTransform];
 			}
@@ -493,11 +500,11 @@ NSLayoutConstraint *newConstraint;
 %hook SBIconView
 
 - (BOOL)isIconContentScalingEnabled {
-	return kIsInFolder ? true : %orig;
+	return [self.location isEqualToString:@"SBIconLocationFolder"] ? true : %orig;
 }
 
 - (void)setIconContentScalingEnabled:(BOOL)enabled {
-	if (kIsInFolder) {
+	if ([self.location isEqualToString:@"SBIconLocationFolder"]) {
 		if (enabled) {
 			%orig(true);
 		}

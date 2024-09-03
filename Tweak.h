@@ -34,7 +34,8 @@
 @property (nonatomic, strong) _UITextLayoutCanvasView *_textCanvasView;
 @property (nonatomic, strong) UIView *_backgroundView;
 @property (nonatomic, strong) _UITextFieldClearButton *_clearButton;
-@property (nonatomic, strong) UILabel *amtOfApps;
+@property (nonatomic, strong) UILabel *_br_appCountLabel;
+@property (nonatomic, strong) NSLayoutConstraint *_br_newConstraint;
 - (BOOL)showingEditUI;
 @end
 
@@ -192,4 +193,3 @@ BOOL folderBackground_portrait;
 
 // BOOL homescreenIconBlur_landscape;
 // BOOL folderBackground_landscape;
-id lastIconSuccess;
