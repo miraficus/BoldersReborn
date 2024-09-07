@@ -1,6 +1,6 @@
 #import <Preferences/PSSwitchTableCell.h>
 #import <Preferences/PSSpecifier.h>
-#import "../BoldersRebornListControllers.h"
+#import "../BoldersRebornInfoController.h"
 
 @interface UIView (Private)
 -(UIViewController *)_viewControllerForAncestor;

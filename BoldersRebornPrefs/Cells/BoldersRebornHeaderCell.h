@@ -4,6 +4,9 @@
 #import <Preferences/PSSpecifier.h>
 #import <Preferences/PSControlTableCell.h>
 
-@interface BoldersRebornHeaderCell : PSControlTableCell
+@interface UIView (Undocumented)
 - (UIViewController *)_viewControllerForAncestor;
+@end
+
+@interface BoldersRebornHeaderCell : PSControlTableCell
 @end

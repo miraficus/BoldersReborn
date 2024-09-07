@@ -519,7 +519,7 @@ static inline NSString *localizedCountString(NSUInteger count) {
 - (void)layoutSubviews {
 	%orig;
 
-	if (!folderBackground_portrait && [self _viewControllerForAncestor] && ![[self _viewControllerForAncestor] isKindOfClass:%c(SBHLibraryCategoryIconViewController)]) {
+	if (!folderBackground_portrait && ![[self _viewControllerForAncestor] isKindOfClass:%c(SBHLibraryCategoryIconViewController)]) {
 		for (UIView *subview in self.subviews) {
 			if (![subview subviews] || [subview isKindOfClass:%c(MTMaterialView)]) {
 				[subview setAlpha:0];

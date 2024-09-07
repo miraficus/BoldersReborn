@@ -16,7 +16,7 @@ Here are the patches that I've figured out needed to be on iOS 13 in order for t
 ---
 
 #### `SBFolderTitleTextField` • `-(void)didMoveToWindow`
-- `iconCount` needs to be set to `localizedCountString((NSUInteger)((SBFloatyFolderView *)(self.superview)).folder.icons.count)` instead of the currently implementation.
+- `iconCount` needs to be set to `localizedCountString((NSUInteger)((SBFloatyFolderView *)(self.superview)).folder.icons.count)` instead of the current implementation.
 
 #### `SBFolderTitleTextField` • `-(void)layoutSubviews`
 - The `canvasView` needs to be an ivar on iOS 13 instead of a property, so `canvasView = MSHookIvar<UIView *>(self, "_textContentView")` instead of `canvasView = self._textCanvasView`.
@@ -27,18 +27,15 @@ Here are the patches that I've figured out needed to be on iOS 13 in order for t
 #### `SBIconListModel` • `-(NSUInteger)maxNumberOfIcons`
 - On iOS 13, before the return, the ivar called `_maxIconCount` also needs to be changed. So, this needs to be added: `MSHookIvar<NSUInteger>(self, "_maxIconCount") = rows * columns`. This can be wrapped in a __comparison check__.
 
-#### `SBIconListGridLayoutConfiguration` • `-(NSUInteger)snumberOfPortraitRows`
-- On iOS 13, before the return, the ivar called `_numberOfPortraitColumns` also needs to be patched. So, this needs to be added: `MSHookIvar<NSUInteger>(self, "_numberOfPortraitRows") = rows`. This can be wrapped in a __comparison check__.
+#### `SBIconListGridLayoutConfiguration` • `-(NSUInteger)numberOfPortraitRows`
+- On iOS 13, before the return, the ivar called `_numberOfPortraitRows` also needs to be patched. So, this needs to be added: `MSHookIvar<NSUInteger>(self, "_numberOfPortraitRows") = rows`. This can be wrapped in a __comparison check__.
 
 #### `SBIconListGridLayoutConfiguration` • `-(NSUInteger)numberOfPortraitColumns`
 - On iOS 13, before the return, the ivar called `_numberOfPortraitColumns` also needs to be patched. So, this needs to be added: `MSHookIvar<NSUInteger>(self, "_numberOfPortraitRows") = rows`. This can be wrapped in a __comparison check__.
 ---
 ### BoldersRebornListControllers.xm
 ---
-#### `BoldersRebornRootListController` • `-(void)initTopMenu`
-- `gearshape.fill` as an SFSymbol does not exist on iOS 13, so either an alternative one would have to be used, or some other solution. This can be done using a __comparison check__.
-
-#### `BoldersRebornPortraitController` • `-(void)initTopMenu`
+#### `BoldersRebornBaseController` • `-(void)initTopMenu`
 - `gearshape.fill` as an SFSymbol does not exist on iOS 13, so either an alternative one would have to be used, or some other solution. This can be done using a __comparison check__.
 ---
 ### BoldersRebornSliderCell.**mm**

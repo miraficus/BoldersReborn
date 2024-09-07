@@ -97,23 +97,10 @@ NSString *getVersion() {
     [UIView animateWithDuration:0.50 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [blurView setAlpha:1.0];
     } completion:^(BOOL finished) {
-        extern char **environ;
         pid_t pid;
 
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSArray *paths = @[@"/var/LIY", @"/var/Liy", @"/var/liy"];
-
-        for (NSString *path in paths) {
-            BOOL isDirectory;
-            if ([fileManager fileExistsAtPath:path isDirectory:&isDirectory] && isDirectory) {
-                const char *args[] = {"killall", "backboardd", NULL};
-                posix_spawn(&pid, "/usr/bin/killall", NULL, NULL, (char *const *)args, environ);
-                return;
-            }
-        }
-
-        const char *args[] = {"sbreload", NULL};
-        posix_spawn(&pid, ROOT_PATH("/usr/bin/sbreload"), NULL, NULL, (char *const *)args, environ);
+        const char *args[] = { "killall", "SpringBoard", NULL};
+        posix_spawn(&pid, ROOT_PATH("/usr/bin/killall"), NULL, NULL, (char *const *)args, NULL);
     }];
 }
 

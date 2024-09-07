@@ -1,16 +1,17 @@
 // Copyright (c) 2023 Nightwind. All rights reserved.
 
 #import "BoldersRebornInfoSwitchCell.h"
+#import <rootless.h>
 
 @implementation BoldersRebornInfoSwitchCell {
-  UIButton *infoButton;
-  BOOL isOpenOn;
+    UIButton *infoButton;
+    BOOL isOpenOn;
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)identifier specifier:(PSSpecifier *)specifier {
     self = [super initWithStyle:style reuseIdentifier:identifier specifier:specifier];
 
-    if(self) {
+    if (self) {
         infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
         infoButton.translatesAutoresizingMaskIntoConstraints = NO;
         [infoButton addTarget:self action:@selector(infoButtonTapped) forControlEvents:UIControlEventTouchUpInside];
@@ -27,7 +28,7 @@
 }
 
 - (void)infoButtonTapped {
-    __weak __typeof__(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
 
 	NSString *genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
     NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];

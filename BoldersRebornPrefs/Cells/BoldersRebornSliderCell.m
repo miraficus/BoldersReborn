@@ -7,7 +7,7 @@
 - (void)plusMinusPressed;
 @end
 
-NSString *stringFromFloatRoundedToDecimalPlaces(NSUInteger decimalPlaces, float floatValue) {
+static NSString *stringFromFloatRoundedToDecimalPlaces(NSUInteger decimalPlaces, float floatValue) {
     NSNumberFormatter *formatter = [NSNumberFormatter new];
     formatter.numberStyle = NSNumberFormatterDecimalStyle;
     formatter.maximumFractionDigits = decimalPlaces;
@@ -23,15 +23,15 @@ NSString *stringFromFloatRoundedToDecimalPlaces(NSUInteger decimalPlaces, float 
 
     UILabel *label = (UILabel *)self.subviews[0].subviews[0].subviews[0].subviews[0];
     label.translatesAutoresizingMaskIntoConstraints = false;
-    [label.centerYAnchor constraintEqualToAnchor: self.contentView.centerYAnchor].active = true;
-    [label.rightAnchor constraintEqualToAnchor: self.contentView.rightAnchor constant: -10].active = true;
+    [label.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor].active = true;
+    [label.rightAnchor constraintEqualToAnchor:self.contentView.rightAnchor constant: -10].active = true;
 
 }
 
 - (void)didMoveToSuperview {
     [super didMoveToSuperview];
 
-    MSHookIvar<NSMutableArray *>(self.control, "_gestureRecognizers") = @[].mutableCopy;
+    [self.control setValue:[NSMutableArray array] forKey:@"_gestureRecognizers"];
 
 	UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
 	tapGestureRecognizer.numberOfTapsRequired = 2;

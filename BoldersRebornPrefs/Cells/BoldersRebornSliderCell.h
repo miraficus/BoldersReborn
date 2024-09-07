@@ -4,9 +4,12 @@
 #import <rootless.h>
 
 @interface UIView (Private)
--(UIViewController *)_viewControllerForAncestor;
+- (UIViewController *)_viewControllerForAncestor;
+@end
+
+@interface PSSliderTableCell (Undocumented)
+- (NSNumber *)controlValue;
 @end
 
 @interface BoldersRebornSliderCell : PSSliderTableCell
-- (NSNumber *)controlValue;
 @end

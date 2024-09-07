@@ -52,7 +52,6 @@
 @property (nonatomic, strong) SBFolder *folder;
 @property (nonatomic, strong) void (^outsideTapHandler)(void);
 - (void)_handleOutsideTap:(id)arg1;
-- (id)_viewControllerForAncestor;
 @end
 
 @interface SBFloatyFolderScrollView : UIView
@@ -103,7 +102,6 @@ typedef struct SBHIconGridSize {
 @interface SBIconView : UIView
 @property (nonatomic, assign, readwrite, getter=isIconContentScalingEnabled) BOOL iconContentScalingEnabled;
 - (NSString *)applicationBundleIdentifierForShortcuts;
-- (id)_viewControllerForAncestor;
 - (BOOL)isFolderIcon;
 - (void)_updateIconContentScale;
 - (NSString *)location;

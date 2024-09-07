@@ -8,8 +8,8 @@
 		<string>BoldersRebornPrefs</string>
 		<key>cell</key>
 		<string>PSLinkCell</string>
-		<key>detail</key>
-		<string>BoldersRebornRootListController</string>
+		<!-- <key>detail</key>
+		<string>BoldersRebornRootListController</string> -->
 		<key>icon</key>
 		<string>icon@3.png</string>
 		<key>isController</key>
