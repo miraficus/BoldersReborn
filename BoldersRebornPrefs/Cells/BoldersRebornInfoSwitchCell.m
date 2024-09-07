@@ -60,7 +60,7 @@
 - (void)refreshCellContentsWithSpecifier:(PSSpecifier *)specifier {
     [super refreshCellContentsWithSpecifier:specifier];
 
-    if([self respondsToSelector:@selector(tintColor)]) {
+    if ([self respondsToSelector:@selector(tintColor)]) {
         infoButton.tintColor = self.tintColor;
     }
 }

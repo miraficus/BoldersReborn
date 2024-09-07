@@ -14,23 +14,13 @@
 		NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
 
 		if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-			filePath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/en.lproj/Localization.strings");
-
 			NSString *langName = [[NSLocale.currentLocale localizedStringForLanguageCode:NSLocale.currentLocale.languageCode] capitalizedString];
 			NSString *error = [NSString stringWithFormat:@"The %@ language is not currently supported. Click here to help translate it!", langName];
 			NSRange range = [error rangeOfString:@"here"];
 			NSString *locationOfHere = [NSString stringWithFormat:@"{%lu, %lu}", range.location, range.length];
 
 			[_specifiers addObject:({
-				PSSpecifier *specifier = [PSSpecifier
-					preferenceSpecifierNamed:NULL
-					target:self
-					set:NULL
-					get:NULL
-					detail:NULL
-					cell:PSGroupCell
-					edit:nil
-				];
+				PSSpecifier *specifier = [PSSpecifier emptyGroupSpecifier];
 
 				[specifier setProperty:@"PSFooterHyperlinkView" forKey:@"footerCellClass"];
 				[specifier setProperty:@"openTranslationSite" forKey:@"footerHyperlinkAction"];
@@ -41,25 +31,6 @@
 				specifier;
 			})];
 		}
-
-		NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
-
-		[_specifiers addObject:({
-			PSSpecifier *specifier = [PSSpecifier
-				preferenceSpecifierNamed:NULL
-				target:self
-				set:NULL
-				get:NULL
-				detail:NULL
-				cell:PSGroupCell
-				edit:nil
-			];
-
-			[specifier setProperty:strcmp(THEOS_PACKAGE_INSTALL_PREFIX, "/var/jb") == 0 ? [dict objectForKey:@"BUILD_ROOTLESS"] : [dict objectForKey:@"BUILD_ROOTFUL"] forKey:@"footerText"];
-			[specifier setProperty:@1 forKey:@"footerAlignment"];
-
-			specifier;
-		})];
 
 		[self localizeSpecifiers];
 	}

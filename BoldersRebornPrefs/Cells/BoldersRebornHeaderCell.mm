@@ -1,15 +1,9 @@
 // Copyright (c) 2023 Nightwind. All rights reserved.
 
+#import <rootless.h>
+#import <spawn.h>
 #import "BoldersRebornHeaderCell.h"
-NSCache *versionCache = nil;
-
-#define kTintColor [UIColor colorWithRed:0.86 green:0.26 blue:0.31 alpha:1.0]
-
-NSString *getVersion() {
-    if (FINAL == 0) {
-        return @"Pre-Release Test";
-    } else return PACKAGE_VERSION;
-}
+#import "../TintColors.h"
 
 @implementation BoldersRebornHeaderCell
 
@@ -47,7 +41,7 @@ NSString *getVersion() {
         ]];
 
         UILabel *versionSubtitle = [UILabel new];
-        versionSubtitle.text = getVersion();
+        versionSubtitle.text = PACKAGE_VERSION;
         versionSubtitle.textColor = UIColor.secondaryLabelColor;
         versionSubtitle.font = [UIFont boldSystemFontOfSize:25];
         versionSubtitle.textAlignment = NSTextAlignmentCenter;
