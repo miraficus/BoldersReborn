@@ -18,7 +18,6 @@ static inline NSString *localizedCountString(NSUInteger count) {
     return [numberFormatter stringFromNumber:[NSNumber numberWithUnsignedLong:count]];
 }
 
-
 // This hook hides the background square of the original folder layout
 %hook SBFolderBackgroundView
 
@@ -66,8 +65,15 @@ static inline NSString *localizedCountString(NSUInteger count) {
 }
 
 // Makes the folder close even if you're tapping on the background that would've originally been there
-- (BOOL)_tapToCloseGestureRecognizer:(id)arg1 shouldReceiveTouch:(id)arg2 {
-	return true;
+- (BOOL)_tapToCloseGestureRecognizer:(UIGestureRecognizer *)gesture shouldReceiveTouch:(UITouch *)touch {
+	const CGPoint point = [touch locationInView:gesture.view];
+    UIView *const viewTouched = [gesture.view hitTest:point withEvent:nil];
+
+	if ([viewTouched isKindOfClass:[self class]] || [viewTouched isKindOfClass:%c(SBIconListView)]) {
+		return true;
+	}
+
+	return %orig;
 }
 
 %end
@@ -141,14 +147,16 @@ static inline NSString *localizedCountString(NSUInteger count) {
 	UIColor *origColor = self.textColor;
 	self.textColor = [origColor colorWithAlphaComponent:titleTransparency_portrait];
 
-	CGRect origTextFrame = canvasView.frame;
-	canvasView.frame = CGRectMake(deviceLanguageIsRTL ? -55 : 20, origTextFrame.origin.y + titleOffset_portrait - topIconInset_portrait, UIScreen.mainScreen.bounds.size.width, origTextFrame.size.height);
+	if (![self showingEditUI]) {
+		const CGRect origTextFrame = canvasView.frame;
+		canvasView.frame = CGRectMake(deviceLanguageIsRTL ? -55 : 20, origTextFrame.origin.y + titleOffset_portrait - topIconInset_portrait, UIScreen.mainScreen.bounds.size.width, origTextFrame.size.height);
 
-	CGRect origBGFrame = self._backgroundView.frame;
-	self._backgroundView.frame = CGRectMake(origBGFrame.origin.x, origBGFrame.origin.y + titleOffset_portrait - topIconInset_portrait, origBGFrame.size.width, origBGFrame.size.height);
+		const CGRect origBGFrame = self._backgroundView.frame;
+		self._backgroundView.frame = CGRectMake(origBGFrame.origin.x, origBGFrame.origin.y + titleOffset_portrait - topIconInset_portrait, origBGFrame.size.width, origBGFrame.size.height);
 
-	CGRect origClearButtonFrame = self._clearButton.frame;
-	self._clearButton.frame = CGRectMake(origClearButtonFrame.origin.x, origClearButtonFrame.origin.y + titleOffset_portrait - topIconInset_portrait, origClearButtonFrame.size.width, origClearButtonFrame.size.height);
+		const CGRect origClearButtonFrame = self._clearButton.frame;
+		self._clearButton.frame = CGRectMake(origClearButtonFrame.origin.x, origClearButtonFrame.origin.y + titleOffset_portrait - topIconInset_portrait, origClearButtonFrame.size.width, origClearButtonFrame.size.height);
+	}
 
 	// ----- //
 
