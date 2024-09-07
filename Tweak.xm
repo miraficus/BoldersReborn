@@ -43,7 +43,7 @@ static inline NSString *localizedCountString(NSUInteger count) {
 %hook SBFloatyFolderView
 
 // Getting rid of the original corner radius for the background
--(double)cornerRadius {
+- (double)cornerRadius {
 	return 0;
 }
 
@@ -51,24 +51,16 @@ static inline NSString *localizedCountString(NSUInteger count) {
 - (CGRect)_frameForScalingView {
 	CGRect frame = %orig;
 
-	CGFloat offset = 0;
-
-	if (@available(iOS 15, *)) {
-		offset = -36;
-	}
-
-	return CGRectMake(frame.origin.x + offset + horizontalIconInset_portrait + horizontalOffset_portrait,
+	return CGRectMake(frame.origin.x - 36 + horizontalIconInset_portrait + horizontalOffset_portrait,
 					  frame.origin.y + topIconInset_portrait,
 					  UIScreen.mainScreen.bounds.size.width - 18 - (horizontalIconInset_portrait * 2),
 					  frame.size.height + verticalIconSpacing_portrait);
 }
 
-// Needed for some reason, not sure what this acually does
 - (NSInteger)iconVisibilityHandling {
 	return 0;
 }
 
-// Needed for some reason, not sure what this acually does
 - (void)updateVisibleColumnRangeWithTotalLists:(NSUInteger)arg1 iconVisibilityHandling:(NSInteger)arg2 {
 	%orig(arg1, 0);
 }
