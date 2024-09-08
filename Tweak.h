@@ -36,6 +36,7 @@
 @property (nonatomic, strong) _UITextFieldClearButton *_clearButton;
 @property (nonatomic, strong) UILabel *_br_appCountLabel;
 @property (nonatomic, strong) NSLayoutConstraint *_br_newConstraint;
+- (void)_br_updateIconCount;
 - (BOOL)showingEditUI;
 @end
 
@@ -50,8 +51,11 @@
 
 @interface SBFloatyFolderView : UIView
 @property (nonatomic, strong) SBFolder *folder;
-@property (nonatomic, strong) void (^outsideTapHandler)(void);
-- (void)_handleOutsideTap:(id)arg1;
+@property (nonatomic, strong, readonly, getter=_titleTextField) SBFolderTitleTextField *titleTextField;
+@end
+
+@interface SBFloatyFolderController : NSObject
+@property (nonatomic, strong) SBFloatyFolderView *folderView;
 @end
 
 @interface SBFloatyFolderScrollView : UIView

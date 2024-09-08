@@ -79,6 +79,17 @@ static inline NSString *localizedCountString(NSUInteger count) {
 %end
 
 
+%hook SBFloatyFolderController
+
+// Update icon count when a new icon is dropped into a folder
+- (void)_updateFolderRequiredTrailingEmptyListCount {
+	%orig;
+	[self.folderView._titleTextField _br_updateIconCount];
+}
+
+%end
+
+
 // Hides the page dots in an opened folder
 %hook SBIconListPageControl
 
@@ -115,25 +126,15 @@ static inline NSString *localizedCountString(NSUInteger count) {
 - (void)didMoveToWindow {
 	%orig;
 
-	// $c => ((SBFloatyFolderView *)(self.superview)).folder.iconCount
-	// $t => ((SBFloatyFolderView *)(self.superview)).folder.displayName
-
-	NSString *iconCount = localizedCountString((NSUInteger)((SBFloatyFolderView *)(self.superview)).folder.iconCount);
-
-	NSString *displayName = ((SBFloatyFolderView *)(self.superview)).folder.displayName;
-
-	NSString *text = [[countText stringByReplacingOccurrencesOfString:@"$c" withString:iconCount] stringByReplacingOccurrencesOfString:@"$t" withString:displayName];
-
 	self._br_appCountLabel = [UILabel new];
-	self._br_appCountLabel.text = text;
 	self._br_appCountLabel.translatesAutoresizingMaskIntoConstraints = false;
-	self._br_appCountLabel.font = [UIFont systemFontOfSize: (25 * subtitleScale_portrait) weight: UIFontWeightSemibold];
+	self._br_appCountLabel.font = [UIFont systemFontOfSize:(25 * subtitleScale_portrait) weight:UIFontWeightSemibold];
 	self._br_appCountLabel.alpha = subtitleTransparency_portrait;
-	[self addSubview: self._br_appCountLabel];
+	[self addSubview:self._br_appCountLabel];
 
 	// [self._br_appCountLabel.bottomAnchor constraintEqualToAnchor: self.topAnchor constant: 15 + subtitleOffset_portrait - topIconInset_portrait].active = true;
-	[self._br_appCountLabel.leadingAnchor constraintEqualToAnchor: self.leadingAnchor constant: 20].active = true;
-	[self._br_appCountLabel.widthAnchor constraintEqualToAnchor: self.widthAnchor].active = true;
+	[self._br_appCountLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:20].active = true;
+	[self._br_appCountLabel.widthAnchor constraintEqualToAnchor:self.widthAnchor].active = true;
 }
 
 // Places all the views in their correct positions
@@ -177,6 +178,17 @@ static inline NSString *localizedCountString(NSUInteger count) {
 // Sets the text alignment of the title to left on LTR languages and right on RTL languages
 - (void)setTextAlignment:(NSTextAlignment)alignment {
 	%orig(NSTextAlignmentNatural);
+}
+
+%new
+- (void)_br_updateIconCount {
+	// $c => ((SBFloatyFolderView *)(self.delegate)).folder.iconCount
+	// $t => ((SBFloatyFolderView *)(self.delegate)).folder.displayName
+
+	NSString *iconCount = localizedCountString((NSUInteger)((SBFloatyFolderView *)(self.delegate)).folder.iconCount);
+	NSString *displayName = ((SBFloatyFolderView *)(self.delegate)).folder.displayName;
+	NSString *text = [[countText stringByReplacingOccurrencesOfString:@"$c" withString:iconCount] stringByReplacingOccurrencesOfString:@"$t" withString:displayName];
+	self._br_appCountLabel.text = text;
 }
 
 %end
