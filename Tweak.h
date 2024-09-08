@@ -1,26 +1,21 @@
 #import <UIKit/UIKit.h>
 #import <rootless.h>
 
-@interface UIView ()
+@interface UIView (Undocumented)
 - (UIViewController *)_viewControllerForAncestor;
 @end
 
 @interface SBFolderBackgroundView : UIView
 @end
 
-@interface SBHFolderIconVisualConfiguration : NSObject
-@property (nonatomic, assign) CGSize gridCellSpacing;
-@end
-
 @interface SBIconListGridLayoutConfiguration : NSObject
 @property (nonatomic, assign) BOOL isOldFolder;
 @property (nonatomic, assign) BOOL check;
-@property (nonatomic, strong) SBHFolderIconVisualConfiguration *folderIconVisualConfiguration;
 
 - (BOOL)checkIfFolder;
-- (void)setNumberOfPortraitColumns:(NSUInteger)arg1;
+- (void)setNumberOfPortraitColumns:(NSUInteger)numberOfPortraitColumns;
 - (NSUInteger)numberOfPortraitColumns;
-- (void)setNumberOfPortraitRows:(NSUInteger)arg1;
+- (void)setNumberOfPortraitRows:(NSUInteger)numberOfPortraitRows;
 - (NSUInteger)numberOfPortraitRows;
 @end
 
@@ -41,25 +36,18 @@
 - (BOOL)showingEditUI;
 @end
 
-@interface SBFolderControllerBackgroundView : UIView
-@end
-
 @interface SBFolder : NSObject
-@property (nonatomic, strong, readonly) NSArray *icons;
 @property (nonatomic, assign) NSUInteger iconCount;
 @property (nonatomic, strong) NSString *displayName;
 @end
 
 @interface SBFloatyFolderView : UIView
-@property (nonatomic, strong) SBFolder *folder;
 @property (nonatomic, strong, readonly, getter=_titleTextField) SBFolderTitleTextField *titleTextField;
+@property (nonatomic, strong) SBFolder *folder;
 @end
 
 @interface SBFloatyFolderController : NSObject
 @property (nonatomic, strong) SBFloatyFolderView *folderView;
-@end
-
-@interface SBFloatyFolderScrollView : UIView
 @end
 
 @interface SBIconListGridLayout : NSObject
@@ -97,7 +85,6 @@ typedef struct SBHIconGridSize {
 @end
 
 @interface SBFolderController : UIView
-@property (nonatomic, readonly, strong) UIView *containerView;
 @end
 
 @interface SBFolderIconImageCache : NSObject
@@ -106,34 +93,18 @@ typedef struct SBHIconGridSize {
 
 @interface SBIconView : UIView
 @property (nonatomic, assign, readwrite, getter=isIconContentScalingEnabled) BOOL iconContentScalingEnabled;
-- (NSString *)applicationBundleIdentifierForShortcuts;
-- (BOOL)isFolderIcon;
-- (void)_updateIconContentScale;
 - (NSString *)location;
 - (void)setIconContentScale:(CGFloat)scale;
 @end
 
-@interface SBHIconManager : NSObject
-+ (SBHIconManager *)sharedInstance;
-- (void)_closeFolderController:(id)arg0 animated:(BOOL)arg1 withCompletion:(id)arg2;
-@end
-
-@interface SBIconListPageControl : UIView
-@end
-
 @interface SBIconListFlowExtendedLayout : NSObject
 @property (nonatomic, strong) SBIconListGridLayoutConfiguration *layoutConfiguration;
-- (id)initWithLayoutConfiguration:(SBIconListGridLayoutConfiguration *)config;
 @end
 
 @interface SBIconListView : UIView
 @property (nonatomic, strong) SBIconListGridLayout *layout;
 @property (nonatomic, strong) SBIconListModel *model;
 @property (nonatomic, strong) NSString *iconLocation;
-@end
-
-@interface SBFolderIconImageView : UIView
-@property (nonatomic, strong, readwrite) UIView *backgroundView;
 @end
 
 /*

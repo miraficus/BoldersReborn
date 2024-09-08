@@ -21,9 +21,6 @@ Here are the patches that I've figured out needed to be on iOS 13 in order for t
 #### `SBFolderTitleTextField` • `-(void)layoutSubviews`
 - The `canvasView` needs to be an ivar on iOS 13 instead of a property, so `canvasView = MSHookIvar<UIView *>(self, "_textContentView")` instead of `canvasView = self._textCanvasView`.
 
-#### `SBIconListView` • `-(void)layoutIconsIfNeeded`
-- The `_updateIconContentScale` call inside of this method seems to only work on iOS 14 and above, meaning this method does not exist on iOS 13 and below. This can be wrapped in an __available check__.
-
 #### `SBIconListModel` • `-(NSUInteger)maxNumberOfIcons`
 - On iOS 13, before the return, the ivar called `_maxIconCount` also needs to be changed. So, this needs to be added: `MSHookIvar<NSUInteger>(self, "_maxIconCount") = rows * columns`. This can be wrapped in a __comparison check__.
 

@@ -229,8 +229,6 @@ static id lastIconSuccess = nil;
 			if ([icon respondsToSelector:@selector(setIconContentScale:)]) {
 				icon.iconContentScale = iconScale_portrait;
 			}
-
-			// [icon _updateIconContentScale];
 		}
 	}
 }
@@ -659,6 +657,9 @@ static id lastIconSuccess = nil;
 |===========================|
 | To make background darker |
 |===========================|
+
+@interface SBFolderControllerBackgroundView : UIView
+@end
 
 @interface MTMaterialLayer : CALayer
 @end
