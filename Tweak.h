@@ -97,6 +97,9 @@ typedef struct SBHIconGridSize {
 - (void)setIconContentScale:(CGFloat)scale;
 @end
 
+@interface SBIconListPageControl : UIView
+@end
+
 @interface SBIconListFlowExtendedLayout : NSObject
 @property (nonatomic, strong) SBIconListGridLayoutConfiguration *layoutConfiguration;
 @end
@@ -105,6 +108,9 @@ typedef struct SBHIconGridSize {
 @property (nonatomic, strong) SBIconListGridLayout *layout;
 @property (nonatomic, strong) SBIconListModel *model;
 @property (nonatomic, strong) NSString *iconLocation;
+@end
+
+@interface SBFolderIconImageView : UIView
 @end
 
 /*
