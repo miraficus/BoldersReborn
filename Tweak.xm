@@ -132,9 +132,9 @@ static inline NSString *localizedCountString(NSUInteger count) {
 	self._br_appCountLabel.alpha = subtitleTransparency_portrait;
 	[self addSubview:self._br_appCountLabel];
 
-	// [self._br_appCountLabel.bottomAnchor constraintEqualToAnchor: self.topAnchor constant: 15 + subtitleOffset_portrait - topIconInset_portrait].active = true;
 	[self._br_appCountLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:20].active = true;
 	[self._br_appCountLabel.widthAnchor constraintEqualToAnchor:self.widthAnchor].active = true;
+	[self._br_appCountLabel.bottomAnchor constraintEqualToAnchor:self.topAnchor constant:15 + subtitleOffset_portrait - topIconInset_portrait].active = true;
 }
 
 // Places all the views in their correct positions
@@ -143,12 +143,11 @@ static inline NSString *localizedCountString(NSUInteger count) {
 
 	const BOOL deviceLanguageIsRTL = [NSLocale characterDirectionForLanguage:NSLocale.preferredLanguages.firstObject] == NSLocaleLanguageDirectionRightToLeft;
 
-	UIView *canvasView = self._textCanvasView;
-
-	UIColor *origColor = self.textColor;
-	self.textColor = [origColor colorWithAlphaComponent:titleTransparency_portrait];
+	self.textColor = [self.textColor colorWithAlphaComponent:titleTransparency_portrait];
 
 	if (![self showingEditUI]) {
+		UIView *const canvasView = self._textCanvasView;
+
 		const CGRect origTextFrame = canvasView.frame;
 		canvasView.frame = CGRectMake(deviceLanguageIsRTL ? -55 : 20, origTextFrame.origin.y + titleOffset_portrait - topIconInset_portrait, UIScreen.mainScreen.bounds.size.width, origTextFrame.size.height);
 
@@ -158,18 +157,21 @@ static inline NSString *localizedCountString(NSUInteger count) {
 		const CGRect origClearButtonFrame = self._clearButton.frame;
 		self._clearButton.frame = CGRectMake(origClearButtonFrame.origin.x, origClearButtonFrame.origin.y + titleOffset_portrait - topIconInset_portrait, origClearButtonFrame.size.width, origClearButtonFrame.size.height);
 	}
+}
 
-	// ----- //
+- (void)setShowsEditUI:(BOOL)showsEditUI animated:(BOOL)animated {
+	%orig;
 
 	self._br_newConstraint.active = false;
 
-	if ([self showingEditUI]) {
-		self._br_newConstraint = [self._br_appCountLabel.bottomAnchor constraintEqualToAnchor: self.topAnchor constant: subtitleOffset_portrait - topIconInset_portrait];
+	if (showsEditUI) {
+		self._br_newConstraint = [self._br_appCountLabel.bottomAnchor constraintEqualToAnchor:self.topAnchor constant:subtitleOffset_portrait - topIconInset_portrait];
 	} else {
-		self._br_newConstraint = [self._br_appCountLabel.bottomAnchor constraintEqualToAnchor: self.topAnchor constant: 15 + subtitleOffset_portrait - topIconInset_portrait];
+		self._br_newConstraint = [self._br_appCountLabel.bottomAnchor constraintEqualToAnchor:self.topAnchor constant:15 + subtitleOffset_portrait - topIconInset_portrait];
 	}
 
 	[UIView animateWithDuration:0.3 animations:^{
+		self._br_appCountLabel.alpha = showsEditUI ? 0.0f : subtitleTransparency_portrait;
 		self._br_newConstraint.active = true;
 		[self layoutIfNeeded];
 	}];
