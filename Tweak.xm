@@ -12,11 +12,6 @@
 
 static id lastIconSuccess = nil;
 
-static inline NSString *localizedCountString(NSUInteger count) {
-    NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
-    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
-    return [numberFormatter stringFromNumber:[NSNumber numberWithUnsignedLong:count]];
-}
 
 // This hook hides the background square of the original folder layout
 %hook SBFolderBackgroundView
@@ -116,6 +111,7 @@ static inline NSString *localizedCountString(NSUInteger count) {
 %hook SBFolderTitleTextField
 %property (nonatomic, strong) UILabel *_br_appCountLabel;
 %property (nonatomic, strong) NSLayoutConstraint *_br_newConstraint;
+%property (nonatomic, strong) NSNumberFormatter *_br_numberFormatter;
 
 // Changes the font of the title of the folder
 - (void)setFont:(UIFont *)font {
@@ -125,6 +121,9 @@ static inline NSString *localizedCountString(NSUInteger count) {
 // Adds the app count label to the folder
 - (void)didMoveToWindow {
 	%orig;
+
+	self._br_numberFormatter = [NSNumberFormatter new];
+	self._br_numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
 
 	self._br_appCountLabel = [UILabel new];
 	self._br_appCountLabel.translatesAutoresizingMaskIntoConstraints = false;
@@ -187,8 +186,10 @@ static inline NSString *localizedCountString(NSUInteger count) {
 	// $c => ((SBFloatyFolderView *)(self.delegate)).folder.iconCount
 	// $t => ((SBFloatyFolderView *)(self.delegate)).folder.displayName
 
-	NSString *iconCount = localizedCountString((NSUInteger)((SBFloatyFolderView *)(self.delegate)).folder.iconCount);
-	NSString *displayName = ((SBFloatyFolderView *)(self.delegate)).folder.displayName;
+	SBFloatyFolderView *const delegate = (SBFloatyFolderView *)[self delegate];
+
+	NSString *iconCount = [self._br_numberFormatter stringFromNumber:@(delegate.folder.iconCount)];
+	NSString *displayName = delegate.folder.displayName;
 	NSString *text = [[countText stringByReplacingOccurrencesOfString:@"$c" withString:iconCount] stringByReplacingOccurrencesOfString:@"$t" withString:displayName];
 	self._br_appCountLabel.text = text;
 }

@@ -36,6 +36,7 @@
 @property (nonatomic, strong) _UITextFieldClearButton *_clearButton;
 @property (nonatomic, strong) UILabel *_br_appCountLabel;
 @property (nonatomic, strong) NSLayoutConstraint *_br_newConstraint;
+@property (nonatomic, strong) NSNumberFormatter *_br_numberFormatter;
 - (void)_br_updateIconCount;
 - (BOOL)showingEditUI;
 @end
