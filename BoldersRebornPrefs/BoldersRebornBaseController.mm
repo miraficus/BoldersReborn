@@ -75,23 +75,6 @@
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:topMenuButton];
 }
 
-- (void)_performRespring {
-	__weak typeof(self) weakSelf = self;
-
-	UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
-	UIVisualEffectView *blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
-	blurView.frame = self.view.bounds;
-	blurView.alpha = 0;
-	[self.view addSubview:blurView];
-
-	[UIView animateWithDuration:0.50 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-		[blurView setAlpha:1.0];
-	} completion:^(BOOL finished) {
-		[weakSelf.view endEditing:YES];
-		[weakSelf _respring];
-	}];
-}
-
 - (void)_performResetPrefs {
 	__weak typeof(self) weakSelf = self;
 
@@ -117,24 +100,13 @@
 		[userDefaults setObject:@true forKey:@"tweakEnabled"];
 		[userDefaults synchronize];
 
-		UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
-		UIVisualEffectView *blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
-		blurView.frame = weakSelf.view.bounds;
-		blurView.alpha = 0;
-		[weakSelf.view addSubview:blurView];
-
-		[UIView animateWithDuration:0.50 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-			[blurView setAlpha:1.0];
-		} completion:^(BOOL finished) {
-			[weakSelf.view endEditing:YES];
-			[weakSelf _respring];
-		}];
+		[weakSelf _performRespring];
 	}]];
 
 	[self presentViewController:alert animated:true completion:nil];
 }
 
-- (void)_respring {
+- (void)_performRespring {
     pid_t pid;
 
     const char *args[] = { "killall", "SpringBoard", NULL };

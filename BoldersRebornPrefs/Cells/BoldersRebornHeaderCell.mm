@@ -82,20 +82,10 @@
     [userDefaults setObject:@(((UISwitch *)(self.control)).on) forKey:@"tweakEnabled"];
     [userDefaults synchronize];
 
-    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
-    UIVisualEffectView *blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
-    blurView.frame = self._viewControllerForAncestor.view.bounds;
-    blurView.alpha = 0;
-    [self._viewControllerForAncestor.view addSubview:blurView];
+    pid_t pid;
 
-    [UIView animateWithDuration:0.50 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        [blurView setAlpha:1.0];
-    } completion:^(BOOL finished) {
-        pid_t pid;
-
-        const char *args[] = { "killall", "SpringBoard", NULL};
-        posix_spawn(&pid, ROOT_PATH("/usr/bin/killall"), NULL, NULL, (char *const *)args, NULL);
-    }];
+    const char *args[] = { "killall", "SpringBoard", NULL};
+    posix_spawn(&pid, ROOT_PATH("/usr/bin/killall"), NULL, NULL, (char *const *)args, NULL);
 }
 
 - (void)layoutSubviews {
