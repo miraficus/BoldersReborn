@@ -36,8 +36,8 @@ RESPRING = "Respring";
 RESET_PREFS = "Restablecer preferencias";
 DEFAULT_APPS = "$c APLICACIONES";
 
-RESET_PREFERENCES_QUESTION = "¿Restablecer preferencias?"
-RESET_PREFERENCES_DESCRIPTION = "No se puede deshacer."
+RESET_PREFERENCES_QUESTION = "¿Restablecer preferencias?";
+RESET_PREFERENCES_DESCRIPTION = "No se puede deshacer.";
 
 RESET_RESET = "Restablecer";
 

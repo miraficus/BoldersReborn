@@ -1,15 +1,3 @@
-<!--
-/*
-|==================================================================|
-| Landscape Preferences                                            |
-| - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  |
-| The original Bolders had landscape as well.                      |
-| However, since landscape is pretty much broken on iOS 14 and 15, |
-| Landscape support is not planned at the moment.                  |
-|==================================================================|
-*/
-
-
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -295,4 +283,4 @@ Disabled: Background blur is a blur of the homescreen wallpaper
 	<key>title</key>
 	<string>Landscape</string>
 </dict>
-</plist>-->
+</plist>
