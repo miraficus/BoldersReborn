@@ -33,5 +33,5 @@ This project is licensed under [GPLv3](LICENSE).
 ###### 🇪🇸 • Spanish • [ChatGPT](https://chat.openai.com) & [uroboro](https://github.com/uroboro)
 ###### 🇻🇳 • Vietnamese • [ChatGPT](https://chat.openai.com)
 ---
-###### Copyright (c) 2023 Nightwind. All rights reserved.
+###### Copyright (c) 2024 Nightwind. All rights reserved.
 ---

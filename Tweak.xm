@@ -1,6 +1,6 @@
 /*
  *
- * Copyright (c) 2023 Nightwind. All rights reserved.
+ * Copyright (c) 2024 Nightwind. All rights reserved.
  *
  * A portion of this code is derived from Atria, which is
  * licensed under the GPLv3 license. The original code can be found at
@@ -11,7 +11,6 @@
 #import "Tweak.h"
 
 static id lastIconSuccess = nil;
-
 
 // This hook hides the background square of the original folder layout
 %hook SBFolderBackgroundView

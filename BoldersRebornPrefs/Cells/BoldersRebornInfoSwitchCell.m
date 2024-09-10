@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Nightwind. All rights reserved.
+// Copyright (c) 2024 Nightwind. All rights reserved.
 
 #import "BoldersRebornInfoSwitchCell.h"
 #import <rootless.h>
