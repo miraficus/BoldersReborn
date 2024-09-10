@@ -1,6 +1,7 @@
 // Copyright (c) 2024 Nightwind. All rights reserved.
 
 #import "BoldersRebornInfoSwitchCell.h"
+#import "../../Localization.h"
 #import <rootless.h>
 
 @implementation BoldersRebornInfoSwitchCell {
@@ -30,14 +31,7 @@
 - (void)infoButtonTapped {
     __weak typeof(self) weakSelf = self;
 
-	NSString *genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
-    NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
-
-    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-        filePath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/en.lproj/Localization.strings");
-    }
-
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
+	NSDictionary *dict = localizationDictionary();
 
     BoldersRebornInfoController *controller = [BoldersRebornInfoController new];
     controller.modalPresentationStyle = UIModalPresentationFormSheet;

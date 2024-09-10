@@ -10,10 +10,7 @@
 	if (!_specifiers) {
 		_specifiers = [self loadSpecifiersFromPlistName:@"Root" target:self];
 
-		NSString *genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
-		NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
-
-		if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+		if (![self _deviceLanguageIsSupported]) {
 			NSString *langName = [[NSLocale.currentLocale localizedStringForLanguageCode:NSLocale.currentLocale.languageCode] capitalizedString];
 			NSString *error = [NSString stringWithFormat:@"The %@ language is not currently supported. Click here to help translate it!", langName];
 			NSRange range = [error rangeOfString:@"here"];
@@ -82,12 +79,9 @@
     tapper.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tapper];
 
-	NSString *genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
-	NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
-
 	NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"com.nightwind.boldersrebornprefs"];
 
-	if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]	&& ![[userDefaults objectForKey:@"initialAlertWasShown"] isEqual:@(true)]) {
+	if (![self _deviceLanguageIsSupported] && ![[userDefaults objectForKey:@"initialAlertWasShown"] isEqual:@(true)]) {
 		NSString *title = @"Your device's language is not supported.\nHowever...";
 		NSString *message = @"You can either help with translating Bolders Reborn to your language, or continue to use the tweak in English.\n\nDo note that if you want to use English and then reconsider later, you will be able to submit a translation in the bottom of the main page of the settings of the tweak.";
 
@@ -135,6 +129,12 @@
 	}
 
 	return cell;
+}
+
+- (BOOL)_deviceLanguageIsSupported {
+	NSString *const genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
+	NSString *const filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
+	return [[NSFileManager defaultManager] fileExistsAtPath:filePath];
 }
 
 - (void)setTitle:(NSString *)title {}

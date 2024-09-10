@@ -1,32 +1,29 @@
 // Copyright (c) 2024 Nightwind. All rights reserved.
 
-#import <rootless.h>
 #import "BoldersRebornSliderCell.h"
+#import "../../Localization.h"
+#import <rootless.h>
 
 @interface UITextField (NumericInput)
 - (void)addNumericAccessory:(BOOL)addPlusMinus;
 - (void)plusMinusPressed;
 @end
 
-static NSString *stringFromFloatRoundedToDecimalPlaces(NSUInteger decimalPlaces, float floatValue) {
-    NSNumberFormatter *formatter = [NSNumberFormatter new];
-    formatter.numberStyle = NSNumberFormatterDecimalStyle;
-    formatter.maximumFractionDigits = decimalPlaces;
-    formatter.roundingMode = NSNumberFormatterRoundUp;
-
-    return [formatter stringFromNumber:@(floatValue)];
+@implementation BoldersRebornSliderCell {
+    NSNumberFormatter *_numberFormatter;
 }
 
-@implementation BoldersRebornSliderCell
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)identifier specifier:(PSSpecifier *)specifier {
+    self = [super initWithStyle:style reuseIdentifier:identifier specifier:specifier];
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
+    if (self) {
+        _numberFormatter = [NSNumberFormatter new];
+        _numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+        _numberFormatter.roundingMode = NSNumberFormatterRoundUp;
+        _numberFormatter.maximumFractionDigits = 2;
+    }
 
-    UILabel *label = (UILabel *)self.subviews[0].subviews[0].subviews[0].subviews[0];
-    label.translatesAutoresizingMaskIntoConstraints = false;
-    [label.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor].active = true;
-    [label.rightAnchor constraintEqualToAnchor:self.contentView.rightAnchor constant: -10].active = true;
-
+    return self;
 }
 
 - (void)didMoveToSuperview {
@@ -39,33 +36,37 @@ static NSString *stringFromFloatRoundedToDecimalPlaces(NSUInteger decimalPlaces,
 	[self addGestureRecognizer:tapGestureRecognizer];
 }
 
-- (void)tapped {
+- (void)layoutSubviews {
+    [super layoutSubviews];
 
-	NSString *genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
-    NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
+    UILabel *const label = (UILabel *)self.control.subviews[0].subviews[0];
 
-    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-        filePath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/en.lproj/Localization.strings");
+    if ([label isKindOfClass:[UILabel class]]) {
+        label.translatesAutoresizingMaskIntoConstraints = false;
+        [label.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor].active = true;
+        [label.rightAnchor constraintEqualToAnchor:self.contentView.rightAnchor constant:-10].active = true;
     }
+}
 
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
+- (void)tapped {
+	NSDictionary *dict = localizationDictionary();
 
-    UISlider *slider = (UISlider *)self.control;
-    NSString *minVal = stringFromFloatRoundedToDecimalPlaces(2, slider.minimumValue);
-    NSString *maxVal = stringFromFloatRoundedToDecimalPlaces(2, slider.maximumValue);
+    UISlider *slider = (UISlider *)[self control];
+    NSString *minVal = [_numberFormatter stringFromNumber:@([slider minimumValue])];
+    NSString *maxVal = [_numberFormatter stringFromNumber:@([slider maximumValue])];
 
     NSString *message = [NSString stringWithFormat:@"%@: %@ • %@: %@", [dict objectForKey:@"MIN_VALUE"], minVal, [dict objectForKey:@"MAX_VALUE"], maxVal];
 
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[dict objectForKey:@"SET_SLIDER_VALUE"] message:message preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.text = stringFromFloatRoundedToDecimalPlaces(2, [self.controlValue floatValue]);
-        textField.placeholder = stringFromFloatRoundedToDecimalPlaces(2, [self.controlValue floatValue]);
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.text = [_numberFormatter stringFromNumber:@([self.controlValue floatValue])];
+        textField.placeholder = [_numberFormatter stringFromNumber:@([self.controlValue floatValue])];
         textField.keyboardType = UIKeyboardTypeDecimalPad;
 
         [textField addNumericAccessory: true];
     }];
 
-    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         float textFieldValue = [[[alertController textFields][0] text] floatValue];
         UISlider *slider = (UISlider *)[self control];
 

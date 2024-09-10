@@ -7,7 +7,7 @@ include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = BoldersReborn
 
-BoldersReborn_FILES = Tweak.xm
+BoldersReborn_FILES = Tweak.xm Localization.m
 BoldersReborn_CFLAGS = -fobjc-arc
 
 include $(THEOS_MAKE_PATH)/tweak.mk

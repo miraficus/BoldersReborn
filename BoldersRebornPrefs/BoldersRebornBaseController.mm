@@ -4,6 +4,7 @@
 #import <Preferences/PSSpecifier.h>
 #import "BoldersRebornBaseController.h"
 #import "TintColors.h"
+#import "../Localization.h"
 
 @implementation BoldersRebornBaseController
 
@@ -13,14 +14,7 @@
 }
 
 - (void)localizeSpecifiers {
-	NSString *genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
-	NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
-
-	if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-		filePath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/en.lproj/Localization.strings");
-	}
-
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
+	NSDictionary *dict = localizationDictionary();
 
 	for (PSSpecifier *specifier in _specifiers) {
 		NSString *origName = specifier.name;
@@ -41,14 +35,7 @@
 - (void)_initTopMenu {
 	__weak typeof(self) weakSelf = self;
 
-	NSString *genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
-	NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
-
-	if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-		filePath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/en.lproj/Localization.strings");
-	}
-
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
+	NSDictionary *dict = localizationDictionary();
 
 	UIButton *topMenuButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	topMenuButton.frame = CGRectMake(0,0,26,26);
@@ -78,14 +65,7 @@
 - (void)_performResetPrefs {
 	__weak typeof(self) weakSelf = self;
 
-	NSString *genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
-	NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
-
-	if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-		filePath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/en.lproj/Localization.strings");
-	}
-
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
+	NSDictionary *dict = localizationDictionary();
 
 	UIAlertController *alert = [UIAlertController alertControllerWithTitle:[dict objectForKey:@"RESET_PREFERENCES_QUESTION"] message:[dict objectForKey:@"RESET_PREFERENCES_DESCRIPTION"] preferredStyle:UIAlertControllerStyleAlert];
 

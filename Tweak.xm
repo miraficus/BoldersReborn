@@ -9,6 +9,7 @@
  */
 
 #import "Tweak.h"
+#import "Localization.h"
 
 static id lastIconSuccess = nil;
 
@@ -114,19 +115,24 @@ static id lastIconSuccess = nil;
 
 // Changes the font of the title of the folder
 - (void)setFont:(UIFont *)font {
-	%orig([UIFont systemFontOfSize: (50 * titleScale_portrait) weight: UIFontWeightSemibold]);
+	%orig([UIFont systemFontOfSize:(50 * titleScale_portrait) weight:UIFontWeightSemibold]);
 }
 
 // Adds the app count label to the folder
 - (void)didMoveToWindow {
 	%orig;
 
-	self._br_numberFormatter = [NSNumberFormatter new];
-	self._br_numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+	if (!self._br_numberFormatter) {
+		self._br_numberFormatter = [NSNumberFormatter new];
+		self._br_numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+	}
+
+	self.textColor = [self.textColor colorWithAlphaComponent:titleTransparency_portrait];
 
 	self._br_appCountLabel = [UILabel new];
 	self._br_appCountLabel.translatesAutoresizingMaskIntoConstraints = false;
 	self._br_appCountLabel.font = [UIFont systemFontOfSize:(25 * subtitleScale_portrait) weight:UIFontWeightSemibold];
+	self._br_appCountLabel.textColor = [UIColor whiteColor];
 	self._br_appCountLabel.alpha = subtitleTransparency_portrait;
 	[self addSubview:self._br_appCountLabel];
 
@@ -139,15 +145,11 @@ static id lastIconSuccess = nil;
 - (void)layoutSubviews {
 	%orig;
 
-	const BOOL deviceLanguageIsRTL = [NSLocale characterDirectionForLanguage:NSLocale.preferredLanguages.firstObject] == NSLocaleLanguageDirectionRightToLeft;
-
-	self.textColor = [self.textColor colorWithAlphaComponent:titleTransparency_portrait];
-
 	if (![self showingEditUI]) {
-		UIView *const canvasView = self._textCanvasView;
+		const BOOL deviceLanguageIsRTL = [NSLocale characterDirectionForLanguage:NSLocale.preferredLanguages.firstObject] == NSLocaleLanguageDirectionRightToLeft;
 
-		const CGRect origTextFrame = canvasView.frame;
-		canvasView.frame = CGRectMake(deviceLanguageIsRTL ? -55 : 20, origTextFrame.origin.y + titleOffset_portrait - topIconInset_portrait, UIScreen.mainScreen.bounds.size.width, origTextFrame.size.height);
+		const CGRect origTextFrame = self._textCanvasView.frame;
+		self._textCanvasView.frame = CGRectMake(deviceLanguageIsRTL ? -55 : 20, origTextFrame.origin.y + titleOffset_portrait - topIconInset_portrait, UIScreen.mainScreen.bounds.size.width, origTextFrame.size.height);
 
 		const CGRect origBGFrame = self._backgroundView.frame;
 		self._backgroundView.frame = CGRectMake(origBGFrame.origin.x, origBGFrame.origin.y + titleOffset_portrait - topIconInset_portrait, origBGFrame.size.width, origBGFrame.size.height);
@@ -306,7 +308,7 @@ static id lastIconSuccess = nil;
 - (NSUInteger)numberOfPortraitRows {
 	[self checkIfFolder];
 
-	if (self.isOldFolder && !(self.check)) {
+	if (self.isOldFolder && !self.check) {
 		return rows;
 	}
 
@@ -317,7 +319,7 @@ static id lastIconSuccess = nil;
 - (NSUInteger)numberOfPortraitColumns {
 	[self checkIfFolder];
 
-	if (self.isOldFolder && !(self.check)) {
+	if (self.isOldFolder && !self.check) {
 		return columns;
 	}
 
@@ -577,14 +579,7 @@ static id lastIconSuccess = nil;
 		return ([prefs objectForKey:key]) ? [prefs objectForKey:key] : def;
 	};
 
-	NSString *genericPath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/LANG.lproj/Localization.strings");
-	NSString *filePath = [genericPath stringByReplacingOccurrencesOfString:@"LANG" withString:NSLocale.currentLocale.languageCode];
-
-	if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-		filePath = ROOT_PATH_NS(@"/Library/PreferenceBundles/BoldersRebornPrefs.bundle/Localization/en.lproj/Localization.strings");
-	}
-
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
+	NSDictionary *dict = localizationDictionary();
 
 	/*
 	|====================|
