@@ -1,0 +1,55 @@
+LABEL_OPTIONS_FOOTER_TEXT = "Exemplo: $t tem $c aplicativos.
+Resultado: FolderName tem 23 aplicativos.";
+LABEL_OPTIONS_LABEL = "Opções da etiqueta:";
+HOMESCREEN = "Tela inicial";
+COUNT_TEXT = "Contagem: ";
+ROWS = "↓ LINHAS POR PAGINA";
+COLUMNS_FOOTER_TEXT = "→ ICONES POR LINHAS";
+BUILD_ROOTLESS = "Montagem: Rootless";
+BUILD_ROOTFUL = "Montagem: Rootful";
+
+TITLE_SCALE = "ESCALA DO TÍTULO (%)";
+TITLE_TRANSPARENCY = "TRANSPARÊNCIA DO TÍTULO (%)";
+TITLE_OFFSET = "DESVIO DO TÍTULO [-↑ / +↓]";
+SUBTITLE_SCALE = "ESCALA DO SUBTÍTULO (%)";
+SUBTITLE_TRANSPARENCY = "TRANSPARÊNCIA DO SUBTÍTULO (%)";
+SUBTITLE_OFFSET = "DESVIO DO SUBTÍTULO [-↑ / +↓]";
+HORIZONTAL_ICON_INSET_FOOTER_TEXT = "Isso pode ser usado para aproximar as laterais dos ícones.";
+HORIZONTAL_ICON_INSET = "INSERÇÃO DE ÍCONE HORIZONTAL";
+TOP_ICON_INSET_FOOTER_TEXT = "Preenchimento extra na parte superior.";
+TOP_ICON_INSET = "INSERÇÃO DE ÍCONE SUPERIOR";
+VERTICAL_ICON_SPACING_FOOTER_TEXT = "Espaçamento vertical dos ícones.";
+VERTICAL_ICON_SPACING = "ESPAÇAMENTO VERTICAL DOS ÍCONES";
+HORIZONTAL_OFFSET_FOOTER_TEXT = "Deslocamento horizontal da pasta em relação ao local original.";
+HORIZONTAL_OFFSET = "DESVIO HORIZONTAL";
+ICON_SCALE = "ESCALA DO ÍCONE (%)";
+HOMESCREEN_ICON_BLUR_FOOTER_TEXT = "ativado: o desfoque de fundo é um desfoque do papel de parede da tela inicial.
+
+desativado: o desfoque de fundo inclui ícones da tela inicial.";
+HOMESCREEN_ICON_BLUR = "DESFOQUE DOS ÍCONES DA TELA INICIAL";
+HOMESCREEN_BLUR = "Desfoque da tela inicial";
+HOMESCREEN_ICON_BLUR_ON_INFO_DESCRIPTION = "O desfoque de fundo é um desfoque do papel de parede da tela inicial.";
+HOMESCREEN_ICON_BLUR_OFF_INFO_DESCRIPTION = "O desfoque de fundo inclui ícones da tela inicial.";
+DISMISS_AND_APPLY = "Dispensar e aplicar";
+
+RESPRING = "Respring";
+RESET_PREFS = "Resetar Preferências";
+DEFAULT_APPS = "$c APLICATIVOS";
+
+RESET_PREFERENCES_QUESTION = "Resetar Preferências?";
+RESET_PREFERENCES_DESCRIPTION = "Isso não pode ser desfeito.";
+
+RESET_RESET = "Resetar";
+
+CANCEL = "Cancelar";
+OK = "OK";
+
+SET_SLIDER_VALUE = "Definir o valor do controle deslizante";
+MAX_VALUE = "Valor Máximo";
+MIN_VALUE = "Valor Mínimo";
+
+FOLDER_BACKGROUND = "Fundo da pasta";
+HOMESCREEN_FOLDER_BACKGROUND = "Fundo da Pasta da Tela Inicial";
+HOMESCREEN_FOLDER_BACKGROUND_FOOTER_TEXT = "Ativado: o ícone da pasta na tela inicial ficará desfocado.
+
+Desativado: o ícone da pasta terá um fundo transparente.";
